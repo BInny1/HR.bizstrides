@@ -78,6 +78,7 @@
     <Content Include="css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="css\images\ui-icons_454545_256x240.png" />
     <Content Include="css\images\ui-icons_888888_256x240.png" />
+    <Content Include="css\tipsy.css" />
     <Content Include="css\UI.css" />
     <Content Include="Default.aspx" />
     <Content Include="EmployeDetails.aspx" />
@@ -120,6 +121,7 @@
     <Content Include="js\jquery-ui-sliderAccess.js" />
     <Content Include="js\jquery-ui-timepicker-addon.js" />
     <Content Include="js\jquery-ui.min.js" />
+    <Content Include="js\jquery.tipsy.js" />
     <Content Include="js\main.js" />
     <Content Include="js\overlib.js" />
     <Content Include="js\overlibmws.js" />
