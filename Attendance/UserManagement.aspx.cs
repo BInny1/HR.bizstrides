@@ -303,8 +303,8 @@ namespace Attendance
 
                 int UserID = Convert.ToInt32(Session["UserID"]);
                 //objInfo.EmpID = txtAddEmpID.Text.Trim();
-                objInfo.BFirstname = txtBusinessFirst.Text==""?"":GeneralFunction.ToProper(txtBusinessFirst.Text.Trim());
-                objInfo.BLastname = txtBusinessLasst.Text == "" ? "" : GeneralFunction.ToProper(txtBusinessLasst.Text.Trim());
+                objInfo.BFirstname = txtBusinessFirst.Text == "" ? objInfo.Firstname.Trim() : GeneralFunction.ToProper(txtBusinessFirst.Text.Trim());
+                objInfo.BLastname = txtBusinessLasst.Text == "" ? objInfo.Lastname.Trim() : GeneralFunction.ToProper(txtBusinessLasst.Text.Trim());
                
                 objInfo.Deptname = ddlDeptment.SelectedItem.Text.ToString();
                 objInfo.Designation = txtDesignation.Text == "" ? "" : GeneralFunction.ToProper(txtDesignation.Text.Trim());

@@ -651,6 +651,14 @@ function clearDisposableItems( sender , args ) {
                 <asp:ListItem Text="Weekly Reprot - Summary" Value="1"></asp:ListItem>
                  <asp:ListItem Text="Monthly Report - Summary" Value="2"></asp:ListItem>
             </asp:DropDownList>
+            
+            
+            &nbsp;&nbsp; <b>
+                 <asp:Label ID="lblGrdLocaton" runat="server" Text="Location"></asp:Label></b>&nbsp;&nbsp;
+                 <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack="true" Style="width: 70px;"
+                Visible="true" Enabled="false">
+              
+            </asp:DropDownList>
         </ContentTemplate>
     </asp:UpdatePanel>
     <div>
@@ -680,6 +688,12 @@ function clearDisposableItems( sender , args ) {
                             Processing
                             <img src="images/loading.gif" />
                         </div>
+                      
+                        <h4>
+                        </h4>
+                      
+                        <h4>
+                        </h4>
                       
                     </h4>
                 </div>
@@ -718,6 +732,7 @@ function clearDisposableItems( sender , args ) {
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label ID="lblName" runat="server" Text='<%#Eval("Empname")%>'></asp:Label>
+                                <asp:Label ID="lblPName" runat="server"  Text='<%#Eval("PEmpname")%>' Visible="false"></asp:Label>
                                   <asp:Label ID="lblTermDate" runat="server" Text='<%#Eval("Termdate")%>' Visible="false"></asp:Label>
                                    <asp:Label ID="lblStartDate" runat="server" Text='<%#Eval("Startdate")%>' Visible="false"></asp:Label>
                             </ItemTemplate>
@@ -1103,7 +1118,8 @@ function clearDisposableItems( sender , args ) {
                 <ContentTemplate>
                     <asp:HiddenField ID="hdnWeeklyStartDt" runat="server" />
                     <asp:GridView CssClass="table3" ID="grdWeeklyAttendance" runat="server" AutoGenerateColumns="false"
-                        OnRowDataBound="grdWeeklyAttendance_RowDataBound" style="max-width:985px">
+                        OnRowDataBound="grdWeeklyAttendance_RowDataBound" style="max-width:985px" 
+                        onrowcreated="grdWeeklyAttendance_RowCreated">
                         <Columns>
                             <asp:TemplateField HeaderText="EmpID">
                                 <ItemTemplate>
@@ -1138,44 +1154,103 @@ function clearDisposableItems( sender , args ) {
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <HeaderTemplate>
-                                    <asp:Label ID="lblWeek1Head" runat="server"></asp:Label>
+                                    <asp:Label ID="lblWeek1Head" runat="server" Text="Hrs"></asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="lblWeek1" runat="server" Text='<%#Eval("Week1")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Width="90" />
+                                <ItemStyle Width="50" />
                                 <HeaderStyle CssClass="bT" />
                             </asp:TemplateField>
+                             <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDay1Head" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDay11" runat="server" Text='<%#Eval("Days1")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="30" CssClass="bR" HorizontalAlign="Center" />
+                                <HeaderStyle CssClass="bT bR" />
+                            </asp:TemplateField>
+                            
                             <asp:TemplateField>
                                 <HeaderTemplate>
-                                    <asp:Label ID="lblWeek2Head" runat="server"></asp:Label>
+                                    <asp:Label ID="lblWeek2Head" runat="server" Text="Hrs"> </asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="lblWeek2" runat="server" Text='<%#Eval("Week2")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Width="90" />
-                                <HeaderStyle CssClass="bT" />
+                                <ItemStyle Width="50" />
+                                <HeaderStyle CssClass="bT " />
                             </asp:TemplateField>
+                            
+                                <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDay2Head" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDay2" runat="server" Text='<%#Eval("Days2")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="30" CssClass="bR" HorizontalAlign="Center"/>
+                                <HeaderStyle CssClass="bT bR" />
+                            </asp:TemplateField>
+                            
                             <asp:TemplateField>
                                 <HeaderTemplate>
-                                    <asp:Label ID="lblWeek3Head" runat="server"></asp:Label>
+                                    <asp:Label ID="lblWeek3Head" runat="server" Text="Hrs"></asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="lblWeek3" runat="server" Text='<%#Eval("Week3")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Width="90" />
-                                <HeaderStyle CssClass="bT" />
+                                <ItemStyle Width="50" />
+                                <HeaderStyle CssClass="bT " />
                             </asp:TemplateField>
+                            
+                                     <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDay3Head" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDay3" runat="server" Text='<%#Eval("Days3")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="30" CssClass="bR" HorizontalAlign="Center"/>
+                                <HeaderStyle CssClass="bT bR" />
+                            </asp:TemplateField>
+                            
+                            
                             <asp:TemplateField>
                                 <HeaderTemplate>
-                                    <asp:Label ID="lblWeek4Head" runat="server"></asp:Label>
+                                    <asp:Label ID="lblWeek4Head" runat="server" Text="Hrs"></asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="lblWeek4" runat="server" Text='<%#Eval("Week4")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Width="90" />
+                                <ItemStyle Width="50" />
                                 <HeaderStyle CssClass="bT" />
                             </asp:TemplateField>
+                            
+                              <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDay4Head" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDay4" runat="server" Text='<%#Eval("Days4")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="30" CssClass="bR"  HorizontalAlign="Center"/>
+                                <HeaderStyle CssClass="bT bR" />
+                            </asp:TemplateField>
+                            
+                             <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblTotalHraHead" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblTotal" runat="server" Text='<%#Eval("TotalHrs")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="50" />
+                                <HeaderStyle CssClass="bT" />
+                            </asp:TemplateField>
+                            
                              <asp:TemplateField>
                                 <HeaderTemplate>
                                     <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
@@ -1183,19 +1258,8 @@ function clearDisposableItems( sender , args ) {
                                 <ItemTemplate>
                                     <asp:Label ID="lblDays" runat="server" Text='<%#Eval("Days")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Font-Bold="true" Width="40" CssClass="bL" />
-                                <HeaderStyle CssClass="bL bT" />
-                            </asp:TemplateField>
-                            
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblTotalHraHead" runat="server" Text="Hrs"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblTotal" runat="server" Text='<%#Eval("TotalHrs")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Font-Bold="true" Width="60" CssClass="bR" />
-                                <HeaderStyle CssClass="bR bT" />
+                                <ItemStyle Font-Bold="true" Width="30" CssClass="bR"  HorizontalAlign="Center"/>
+                                <HeaderStyle CssClass="bT bR" />
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
@@ -1208,7 +1272,8 @@ function clearDisposableItems( sender , args ) {
                 <ContentTemplate>
                     <asp:HiddenField ID="hdnMonthlyStartDt" runat="server" />
                     <asp:GridView CssClass="table3" ID="grdMonthlyAttendance" runat="server" AutoGenerateColumns="false"
-                        OnRowDataBound="grdMonthlyAttendance_RowDataBound" style="max-width:985px">
+                        OnRowDataBound="grdMonthlyAttendance_RowDataBound" style="max-width:985px" 
+                        onrowcreated="grdMonthlyAttendance_RowCreated">
                         <Columns>
                             <asp:TemplateField HeaderText="EmpID">
                                 <ItemTemplate>
@@ -1235,72 +1300,147 @@ function clearDisposableItems( sender , args ) {
                                     <asp:Label ID="lblTermReason" runat="server" Text='<%#Eval("TermReason")%>'></asp:Label>
                                 </ItemTemplate>
                                  <ItemStyle Width="90" CssClass="bR" />
-                                <HeaderStyle CssClass="bR" />
+                               
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <HeaderTemplate>
-                                    <asp:Label ID="lblMonth1Head" runat="server"></asp:Label>
+                                    <asp:Label ID="lblMonth1Head" runat="server" Text="Hrs"></asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="lblMonth1" runat="server" Text='<%#Eval("Month1")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Width="60" />
+                                <ItemStyle Width="60" CssClass="bL"/>
+                                <HeaderStyle CssClass="bT bL" />
+                                
                             </asp:TemplateField>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblMonth2Head" runat="server"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblMonth2" runat="server" Text='<%#Eval("Month2")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="60" />
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblMonth3Head" runat="server"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblMonth3" runat="server" Text='<%#Eval("Month3")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="60" />
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblMonth4Head" runat="server"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblMonth4" runat="server" Text='<%#Eval("Month4")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="60" />
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblMonth5Head" runat="server"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblMonth5" runat="server" Text='<%#Eval("Month5")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="60" />
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="lblMonth6Head" runat="server"></asp:Label>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblMonth6" runat="server" Text='<%#Eval("Month6")%>'></asp:Label>
-                                </ItemTemplate>
-                                <ItemStyle Width="60" />
-                            </asp:TemplateField>
-                            <asp:TemplateField>
+                            
+                             <asp:TemplateField>
                                 <HeaderTemplate>
                                     <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                    <asp:Label ID="lblDays" runat="server" Text='<%#Eval("Days")%>'></asp:Label>
+                                    <asp:Label ID="lblDays1" runat="server" Text='<%#Eval("Days1")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Font-Bold="true" Width="40" CssClass="bL" />
-                                <HeaderStyle CssClass="bL bT" />
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT" />
                             </asp:TemplateField>
+                            
+                            <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblMonth2Head" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMonth2" runat="server" Text='<%#Eval("Month2")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="60" CssClass="bL"/>
+                                <HeaderStyle CssClass="bT bL" />
+                                
+                            </asp:TemplateField>
+                            
+                             <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays2" runat="server" Text='<%#Eval("Days2")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT " />
+                                
+                            </asp:TemplateField>
+                            
+                            <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblMonth3Head" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMonth3" runat="server" Text='<%#Eval("Month3")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="60" CssClass="bL"/>
+                                <HeaderStyle CssClass="bT bL" />
+                                
+                            </asp:TemplateField>
+                             <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays3" runat="server" Text='<%#Eval("Days3")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT" />
+                              
+                            </asp:TemplateField>
+                            
+                            
+                            <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblMonth4Head" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMonth4" runat="server" Text='<%#Eval("Month4")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="60" CssClass="bL"/>
+                                <HeaderStyle CssClass="bT bL" />
+                            </asp:TemplateField>
+                            
+                              <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays4" runat="server" Text='<%#Eval("Days4")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT" />
+                            </asp:TemplateField>
+                            
+                            <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblMonth5Head" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMonth5" runat="server" Text='<%#Eval("Month5")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="60" CssClass="bL "/>
+                                <HeaderStyle CssClass="bT bL" />
+                            </asp:TemplateField>
+                              <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays5" runat="server" Text='<%#Eval("Days5")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT" />
+                            </asp:TemplateField>
+                            
+                            
+                            
+                            <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblMonth6Head" runat="server" Text="Hrs"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMonth6" runat="server" Text='<%#Eval("Month6")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Width="60" CssClass="bL"/>
+                                <HeaderStyle CssClass="bT bL" />
+                            </asp:TemplateField>
+                            
+                              <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays6" runat="server" Text='<%#Eval("Days6")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30" />
+                                <HeaderStyle CssClass="bT" />
+                            </asp:TemplateField>
+                            
+                          
                            <asp:TemplateField>
                                 <HeaderTemplate>
                                     <asp:Label ID="lblTotalHraHead" runat="server" Text="Hrs"></asp:Label>
@@ -1308,9 +1448,21 @@ function clearDisposableItems( sender , args ) {
                                 <ItemTemplate>
                                     <asp:Label ID="lblTotal" runat="server" Text='<%#Eval("TotalHrs")%>'></asp:Label>
                                 </ItemTemplate>
-                                <ItemStyle Font-Bold="true" Width="60"  CssClass="bR" />
-                                <HeaderStyle CssClass="bR" />
+                                <ItemStyle Font-Bold="true" Width="60"  CssClass="bL" />
+                                <HeaderStyle CssClass="bL bT" />
                             </asp:TemplateField>
+                            
+                              <asp:TemplateField>
+                                <HeaderTemplate>
+                                    <asp:Label ID="lblDaysHraHead" runat="server" Text="Days"></asp:Label>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDays" runat="server" Text='<%#Eval("Days")%>'></asp:Label>
+                                </ItemTemplate>
+                                <ItemStyle Font-Bold="true" Width="30"  />
+                                <HeaderStyle CssClass="bR bT" />
+                            </asp:TemplateField>
+                            
                         </Columns>
                     </asp:GridView>
                 </ContentTemplate>
@@ -1531,10 +1683,7 @@ function clearDisposableItems( sender , args ) {
             <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
                 <tr>
                     <td>
-                        Old password<span class="must">*</span>
-                    </td>
-                    <td>
-                        <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="20" TextMode="Password"></asp:TextBox>
+                        Old password                     <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="20" TextMode="Password"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

@@ -25,6 +25,15 @@
 
     <script src="js/datetimepicker_css.js" type="text/javascript"></script>
 
+    <script>
+    
+        $(function(){
+            $('.popupHolder2').css('z-index','100002')
+            $('.popupContent2').css('z-index','100003')
+        })
+        
+    </script>
+
     <script type="text/javascript">
     
     
@@ -59,6 +68,20 @@
   
           });  
           
+          
+           $('#txtSheduleStart').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtScheduleEnd').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtLunchStart').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtLunchEnd').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          
        
         }
         
@@ -67,6 +90,128 @@
          $('#spinner').show();
          return true;
         }
+        
+        
+        function validSchedules()
+      {
+         debugger
+          var valid=true;
+
+           var SchStart=$.trim($('#txtSheduleStart').val())
+           var SchEnd=$.trim($('#txtScheduleEnd').val())
+           var LunchStart=$.trim($('#txtLunchStart').val())
+           var LunchEnd=$.trim($('#txtLunchEnd').val())
+           
+           //var str = SchStart.toString();
+           SchStart = SchStart.replace(/AM/g, " AM");
+           SchStart = SchStart.replace(/PM/g, " PM");
+           
+           //var str = SchEnd.toString();
+           SchEnd = SchEnd.replace(/AM/g, " AM");
+           SchEnd = SchEnd.replace(/PM/g, " PM");
+           
+           //var str = LunchStart.toString();
+           LunchStart = LunchStart.replace(/AM/g, " AM");
+           LunchStart = LunchStart.replace(/PM/g, " PM");
+           
+           //var str = LunchEnd.toString();
+           LunchEnd = LunchEnd.replace(/AM/g, " AM");
+           LunchEnd = LunchEnd.replace(/PM/g, " PM");
+           
+           if (document.getElementById('txtSheduleStart').value.trim()=="")
+           {
+               alert("Please schedule start time.");               
+               valid=false;
+               document.getElementById("txtSheduleStart").value = "";
+               document.getElementById("txtSheduleStart").focus();
+           }
+
+        else if (document.getElementById('txtSheduleStart').value.trim().length < 1)
+           {
+               alert("Please enter valid schedule start time.");               
+               valid=false;
+               document.getElementById("txtSheduleStart").value = "";
+               document.getElementById("txtSheduleStart").focus();
+           }
+           
+            else if (document.getElementById('txtScheduleEnd').value.trim()=="")
+           {
+               alert("Please enter valid schedule end time.");               
+               valid=false;
+               document.getElementById("txtScheduleEnd").value = "";
+               document.getElementById("txtScheduleEnd").focus();
+           }
+           
+            else if (document.getElementById('txtScheduleEnd').value.trim().length < 1)
+           {
+               alert("Please enter valid schedule end time.");               
+               valid=false;
+               document.getElementById("txtScheduleEnd").value = "";
+               document.getElementById("txtScheduleEnd").focus();
+           }
+   
+        else if (document.getElementById('txtLunchStart').value.trim().length < 1) {
+               alert("Please enter lunch start time.");
+               valid = false;
+               document.getElementById("txtLunchStart").value = "";
+               document.getElementById("txtLunchStart").focus();
+           }
+
+          else if (document.getElementById('txtLunchEnd').value.trim().length < 1) {
+               alert("Please enter lunch end time.");
+               valid = false;
+               document.getElementById("txtLunchEnd").value = "";
+               document.getElementById("txtLunchEnd").focus();
+           }
+           
+            else if (document.getElementById('rdFive').checked==false &&document.getElementById('rdSix').checked==false &&document.getElementById('rdSeven').checked==false){
+               alert("Please choose days.");
+               valid = false;
+               //document.getElementById("rdFive").value = "";
+               document.getElementById("rdFive").focus();
+           }
+           
+           
+           
+         else if(Date.parse("01/01/2000 "+SchStart)>=Date.parse("01/01/2000 "+SchEnd))
+         {
+           alert("Schedule start time should be greater than end time");
+           valid=false;
+            document.getElementById("txtScheduleEnd").value = "";
+            document.getElementById("txtScheduleEnd").focus();
+         }
+           
+           
+           else if(Date.parse("01/01/2000 "+LunchStart)>=Date.parse("01/01/2000 "+LunchEnd))
+         {
+           alert("Lunch start time should be greater than end time");
+           valid=false;
+            document.getElementById("txtLunchEnd").value = "";
+            document.getElementById("txtLunchEnd").focus();
+         }
+           
+            else if(!((Date.parse("01/01/2000 "+SchStart)<=Date.parse("01/01/2000 "+LunchStart))&&(Date.parse("01/01/2000 "+LunchStart)<=Date.parse("01/01/2000 "+SchEnd))))
+         {
+           alert("Lunch start time should be in b/w schedule start and end time");
+           valid=false;
+            document.getElementById("txtLunchStart").value = "";
+            document.getElementById("txtLunchStart").focus();
+         }
+           
+            else if(!((Date.parse("01/01/2000 "+SchStart)<=Date.parse("01/01/2000 "+LunchEnd))&&(Date.parse("01/01/2000 "+LunchEnd)<=Date.parse("01/01/2000 "+SchEnd))))
+         {
+           alert("Lunch end time should be in b/w schedule start and end time");
+           valid=false;
+            document.getElementById("txtLunchEnd").value = "";
+            document.getElementById("txtLunchEnd").focus();
+         }
+           
+           
+
+           return valid;
+      }
+    
+    
         
         
         
@@ -357,14 +502,24 @@
             var start=document.getElementById('txtEditStartDate').value;
             var end=document.getElementById('txtEditTermDate').value;
             startdate=new Date(start);
-            enddate=new Date(end);     
+            enddate=new Date(end);
+            var today=document.getElementById('hdnToday').value;
+            var todaydate=new Date(today);
+                 
                if( startdate>enddate)
                 { 
                  alert("Startdate should be lessthan terminate date");
                   document.getElementById("txtEditTermDate").focus();
                  valid=false;
                 }
+                if(enddate>todaydate)
+                {
+                  alert("Terminate date should not be the future date");
+                  document.getElementById("txtEditTermDate").focus();
+                 valid=false;
+                }
            }
+  
         }
       
         
@@ -524,10 +679,10 @@
                 <table style="width: auto; margin-left: 20px; float: right; border-collapse: collapse">
                     <tr>
                         <td style="vertical-align: middle; padding-top: 3px;">
-                         <div class="inOut">
-                SCHEDULE: <asp:Label ID="lblHeadSchedule" runat="server"></asp:Label>
-            </div>
-            
+                            <div class="inOut">
+                                SCHEDULE:
+                                <asp:Label ID="lblHeadSchedule" runat="server"></asp:Label>
+                            </div>
                             <b>User:</b>
                             <asp:Label ID="lblEmployyName" runat="server"></asp:Label>&nbsp;&nbsp;
                             <div class="clear h51">
@@ -537,10 +692,12 @@
                             <ul class="menu2">
                                 <li><a href="#" class="dropdown-menu">Menu <span class="pic">&nbsp;</span> </a>
                                     <ul>
-                                        <li><asp:LinkButton ID="lnkReport" runat="server" Text="Attendance Report" onclick="lnkReport_Click"></asp:LinkButton></li>
-                                        <li><asp:LinkButton ID="lnkPayroll" runat="server" Text="Payroll Report" PostBackUrl="Payroll.aspx" ></asp:LinkButton></li>
                                         <li>
-                                            <asp:LinkButton runat="server" ID="lnkUserMangement" Text="Employee Management" onclick="lnkUserMangement_Click"></asp:LinkButton></li>
+                                            <asp:LinkButton ID="lnkReport" runat="server" Text="Attendance Report" OnClick="lnkReport_Click"></asp:LinkButton></li>
+                                        <li>
+                                            <asp:LinkButton ID="lnkPayroll" runat="server" Text="Payroll Report" PostBackUrl="Payroll.aspx"></asp:LinkButton></li>
+                                        <li>
+                                            <asp:LinkButton runat="server" ID="lnkUserMangement" Text="Employee Management" OnClick="lnkUserMangement_Click"></asp:LinkButton></li>
                                         <li>
                                             <asp:UpdatePanel ID="ppp" runat="server">
                                                 <ContentTemplate>
@@ -582,7 +739,6 @@
             </div>
         </div>
     </div>
-  
     <asp:UpdatePanel ID="upTotal" runat="server">
         <ContentTemplate>
             <h2 class="pageHeadding">
@@ -591,20 +747,20 @@
             <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="btn btn-small btn-success"
                 Style="margin-left: 1166px; display: inline-block; margin-bottom: 0px; text-decoration: none;"
                 OnClick="btnBack_Click" />
-                <div style="width: 98%; margin-left: 10px;">
-                    <div class="inner">
-                        <table style="width: 100%; border-collapse: collapse">
-                            <tr>
-                                <td style="width: 48%; vertical-align: top;">
-                                    <h4 class="ppHed" style="margin-bottom: 0">
-                                        Employee Details <span class="actions">
-                                            <asp:Button ID="btnEmpEdit" runat="server" class="btn btn-inverse btn-small" Text="Edit"
-                                                OnClick="btnEmpEdit_Click" />
-                                        </span>
-                                    </h4>
-                                    <div style="border: #ccc 1px solid; height: 250px;">
-                                        <div class="ppHedContent" style="margin: 10px; padding: 0">
-                                            <table style="width: 100%; border-collapse: collapse;">
+            <div style="width: 98%; margin-left: 10px;">
+                <div class="inner">
+                    <table style="width: 100%; border-collapse: collapse">
+                        <tr>
+                            <td style="width: 48%; vertical-align: top;">
+                                <h4 class="ppHed" style="margin-bottom: 0">
+                                    Employee Details <span class="actions">
+                                        <asp:Button ID="btnEmpEdit" runat="server" class="btn btn-inverse btn-small" Text="Edit"
+                                            OnClick="btnEmpEdit_Click" />
+                                    </span>
+                                </h4>
+                                <div style="border: #ccc 1px solid; height: 270px;">
+                                    <div class="ppHedContent" style="margin: 10px; padding: 0">
+                                        <table style="width: 100%; border-collapse: collapse;">
                                             <tr>
                                                 <td style="width: 80%; min-width: 390px;">
                                                     <table>
@@ -627,7 +783,7 @@
                                                                 <asp:HiddenField ID="hdnFirst" runat="server" />
                                                             </td>
                                                         </tr>
-                                                           <tr>
+                                                        <tr>
                                                             <td>
                                                                 <b>Business Name</b>
                                                             </td>
@@ -637,7 +793,6 @@
                                                                 <asp:HiddenField ID="hdnBusinessLast" runat="server" />
                                                             </td>
                                                         </tr>
-                                                        
                                                         <tr>
                                                             <td>
                                                                 <b>Emp Type</b>
@@ -720,6 +875,15 @@
                                                 </td>
                                                 <td style="vertical-align: top; width: 130px;">
                                                     <asp:Image ID="imgPhoto" CssClass="detImg" runat="server" ImageUrl="~/Photos/defaultUSer.jpg" />
+                                                    <br />
+                                                    <br />
+                                                    <asp:UpdatePanel ID="upreset" runat="server">
+                                                        <ContentTemplate>
+                                                            <asp:LinkButton ID="lnkResetPasscode" runat="server" Text="Reset Passcode" OnClick="lnkResetPasscode_Click"></asp:LinkButton>
+                                                            <br />
+                                                            <asp:LinkButton ID="lnkResetPassword" runat="server" Text="Reset Password" OnClick="lnkResetPassword_Click"></asp:LinkButton>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
                                                 </td>
                                             </tr>
                                         </table>
@@ -736,7 +900,7 @@
                                             Text="Edit" OnClick="btnEditPersonalDet_Click" />
                                     </span>
                                 </h4>
-                                <div style="border: #ccc 1px solid; height: 250px;">
+                                <div style="border: #ccc 1px solid; height: 270px;">
                                     <div class="ppHedContent" style="margin: 0 10px;">
                                         <table style="width: 100%; border-collapse: collapse;">
                                             <tr>
@@ -858,7 +1022,6 @@
                             </td>
                         </tr>
                         <tr>
-                          
                             <td colspan="3">
                                 <h4 class="ppHed" style="margin-bottom: 0">
                                     Salary\Tax Details <span class="actions">
@@ -918,7 +1081,6 @@
                                     </div>
                                 </div>
                             </td>
-                           
                         </tr>
                         <tr>
                             <td colspan="3" style="height: 20px;">
@@ -1097,7 +1259,7 @@
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnEmpEdit" EventName="Click" />
             <asp:AsyncPostBackTrigger ControlID="btnEditSalaryDetails" EventName="Click" />
-          <%--  <asp:AsyncPostBackTrigger ControlID="btnEdittaxDet" EventName="Click" />--%>
+            <%--  <asp:AsyncPostBackTrigger ControlID="btnEdittaxDet" EventName="Click" />--%>
             <asp:AsyncPostBackTrigger ControlID="btnEditPersonalDet" EventName="Click" />
             <asp:AsyncPostBackTrigger ControlID="btnEditEmergencyDet" EventName="Click" />
         </Triggers>
@@ -1121,10 +1283,10 @@
             <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
                 <tr>
                     <td>
-                        Old password<span class="must">*</span>
+                        Old password
                     </td>
                     <td>
-                        <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
+                      <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -1237,7 +1399,7 @@
         PopupControlID="DivEditpopup" CancelControlID="lnkEditClose" TargetControlID="hdnEdit">
     </cc1:ModalPopupExtender>
     <asp:HiddenField ID="hdnEdit" runat="server" />
-    <div id="DivEditpopup" runat="server" class="popContent" style="width: 450px; display: none">
+    <div id="DivEditpopup" runat="server" class="popContent" style="width: 900px; display: none">
         <h2>
             Edit employee details<span class="close">
                 <asp:LinkButton ID="lnkEditClose" runat="server"></asp:LinkButton></span>
@@ -1245,64 +1407,100 @@
         <div class="inner" runat="server" id="Editpopup">
             <asp:UpdatePanel ID="UP" runat="server">
                 <ContentTemplate>
-                    <table style="width: 90%; margin: 20px auto; border-collapse: collapse;">
+                    <table style="width: 95%; margin: 20px auto; border-collapse: collapse;">
                         <tr>
-                            <td style="width: 120px;">
-                                EmpID
+                            <td style="width: 100px;">
+                                <b>EmpID </b>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEditEmpID" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:HiddenField ID="hdnToday" runat="server" />
+                            </td>
+                            <td colspan="3">
+                                &nbsp;
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                First name<span class="must">*</span>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEditFirstname" runat="server" MaxLength="50"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Last name<span class="must">*</span>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEditLastname" runat="server" MaxLength="50"></asp:TextBox>
-                            </td>
-                        </tr>
-                        
-                         <tr>
-                            <td>
-                                Business first name
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEditBFname" runat="server" MaxLength="50"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Business last name
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEditBLname" runat="server" MaxLength="50"></asp:TextBox>
-                            </td>
-                        </tr>
-                        
-                        
                         <tr>
                             <td colspan="2">
+                                <fieldset class="popupFieldSet">
+                                    <legend>Personal</legend>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 100px;">
+                                                First name<span class="must">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtEditFirstname" runat="server" MaxLength="50"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Last name<span class="must">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtEditLastname" runat="server" MaxLength="50"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                            <td style="width: 30px;">
+                                &nbsp;
+                            </td>
+                            <td colspan="2">
+                                <fieldset class="popupFieldSet">
+                                    <legend>Business</legend>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 100px;">
+                                                First name
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtEditBFname" runat="server" MaxLength="50"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Last name
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtEditBLname" runat="server" MaxLength="50"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
                                 <div class="divider1">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="width: 100px;">
                                 Employee type<span class="must">*</span>
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlEmpType" runat="server" AutoPostBack="true" AppendDataBoundItems="true">
                                     <asp:ListItem Text="Select" Value="0"></asp:ListItem>
                                 </asp:DropDownList>
+                            </td>
+                            <td style="width: 30px;">
+                                &nbsp;
+                            </td>
+                            <td style="width: 115px;">
+                                Schedule<span class="must">*</span>
+                            </td>
+                            <td>
+                                <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                                    <ContentTemplate>
+                                        <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true">
+                                        </asp:DropDownList>
+                                        &nbsp;&nbsp;
+                                        <asp:LinkButton ID="lnkScheduleAdd" runat="server" Text="Add new" OnClick="lnkScheduleAdd_Click"></asp:LinkButton>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
                             </td>
                         </tr>
                         <tr>
@@ -1314,18 +1512,8 @@
                                     <asp:ListItem Text="Select" Value="0"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
-                        </tr>
-                        <tr>
                             <td>
-                                Schedule<span class="must">*</span>
                             </td>
-                            <td>
-                                <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true" AppendDataBoundItems="true">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                </asp:DropDownList>
-                            </td>
-                        </tr>
-                        <tr>
                             <td>
                                 Designation
                             </td>
@@ -1334,7 +1522,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="5">
                                 <div class="divider1">
                                 </div>
                             </td>
@@ -1349,9 +1537,29 @@
                                 <asp:RadioButton ID="rdEditActiveFalse" runat="server" GroupName="editActive" AutoPostBack="true"
                                     OnCheckedChanged="rdEditActiveFalse_CheckedChanged" />No
                             </td>
+                            <td>
+                            </td>
+                            <td style="vertical-align: middle">
+                                Photo
+                            </td>
+                            <td style="vertical-align: middle">
+                                <table style="width: 100%; border-collapse: collapse" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="vertical-align: top; width: 220px;">
+                                            <asp:FileUpload ID="photoUpload1" runat="server" Style="width: 98%;" /><br />
+                                            <span style="font-size: 10px; color: GrayText">(Maximum file size 4MB)</span>
+                                        </td>
+                                        <td style="vertical-align: top; text-align: left;">
+                                            <div class="photo" style="float: left">
+                                                <asp:Image ID="EdiImg" runat="server" ImageUrl="Photos/defaultUSer.jpg" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="5">
                                 <div class="divider1">
                                 </div>
                             </td>
@@ -1363,10 +1571,11 @@
                             <td>
                                 <asp:TextBox ID="txtEditStartDate" runat="server" Enabled="false"></asp:TextBox>
                             </td>
-                        </tr>
-                        <tr>
                             <td>
-                                <asp:Label ID="lblEdit1TermDate" runat="server" Text="Term date *" Visible="false"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="lblEdit1TermDate" runat="server" Text="Term date <span class='must'>*</span>"
+                                    Visible="false"></asp:Label>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEditTermDate" runat="server" Visible="false"></asp:TextBox>
@@ -1374,42 +1583,26 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="lblEdit1Termreason" runat="server" Text="Term reason *" Visible="false"></asp:Label>
+                                <asp:Label ID="lblEdit1Termreason" runat="server" Text="Term reason <span class='must'>*</span>"
+                                    Visible="false"></asp:Label>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEdit1TermReason" runat="server" TextMode="MultiLine" Visible="false"
                                     MaxLength="250"></asp:TextBox>
                             </td>
+                            <td colspan="3">
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="5">
                                 <div class="divider1">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle">
-                                Photo
+                            <td colspan="4">
                             </td>
-                            <td style="vertical-align: middle">
-                                <asp:FileUpload ID="photoUpload1" runat="server" />
-                                 <br />
-                                <span style="font-size:10px;color:GrayText">(Maximum file size 4MB)</span>
-                                <div class="photo">
-                                    <asp:Image ID="EdiImg" runat="server" ImageUrl="Photos/defaultUSer.jpg" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div class="divider1">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
+                            <td style="text-align: right;">
                                 <div style="display: inline-block">
                                     <asp:UpdatePanel ID="upEditEmployee" runat="server">
                                         <ContentTemplate>
@@ -1654,7 +1847,7 @@
                                 SSN
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSSN" runat="server" MaxLength="9"  onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                <asp:TextBox ID="txtSSN" runat="server" MaxLength="9" onkeypress="return isNumberKey(event)"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -1962,6 +2155,302 @@
         </div>
     </div>
     <!--Edit Emergency contact details End-->
+    <cc1:ModalPopupExtender ID="mdlSchedulepopup" runat="server" BackgroundCssClass="popupHolder2"
+        CancelControlID="lnkScheduleClose" TargetControlID="hdnSchedulepop" PopupControlID="Schedulepop">
+    </cc1:ModalPopupExtender>
+    <asp:HiddenField ID="hdnSchedulepop" runat="server" />
+    <div id="Schedulepop" runat="server" class="popContent popupContent2" style="width: 400px;
+        display: none">
+        <h2>
+            Add Schedule <span class="close">
+                <asp:LinkButton ID="lnkScheduleClose" runat="server"></asp:LinkButton></span>
+        </h2>
+        <div class="inner">
+            <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
+                <tr>
+                    <td>
+                        Schedule starttime
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtSheduleStart" runat="server" MaxLength="10"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Schedule endtime
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtScheduleEnd" runat="server" MaxLength="10"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lunch start
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtLunchStart" runat="server" MaxLength="10"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lunch end
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtLunchEnd" runat="server" MaxLength="10"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Days
+                    </td>
+                    <td>
+                        <asp:RadioButton ID="rdFive" runat="server" GroupName="ActiveDays" />Five&nbsp;&nbsp;
+                        <asp:RadioButton ID="rdSix" runat="server" GroupName="ActiveDays" />Six &nbsp;&nbsp;
+                        <asp:RadioButton ID="rdSeven" runat="server" GroupName="ActiveDays" />Seven &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <div style="display: inline-block">
+                            <asp:UpdatePanel ID="upSch" runat="server">
+                                <ContentTemplate>
+                                    <asp:Button ID="btnSchUpdate" runat="server" Text="Update" CssClass="btn btn-danger"
+                                        OnClientClick="return validSchedules();" OnClick="btnSchUpdate_Click" />
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnCancelSch" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                        </div>
+                        <asp:Button ID="btnCancelSch" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancelSch_Click" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+      <cc1:ModalPopupExtender ID="mdlResetPasscode" runat="server" BackgroundCssClass="popupHolder"
+        CancelControlID="lnkResetPasscodeClose" TargetControlID="hdnResetPasscode" PopupControlID="Resetpasscodepopup">
+    </cc1:ModalPopupExtender>
+    <asp:HiddenField ID="hdnResetPasscode" runat="server" />
+    <div id="Resetpasscodepopup" runat="server" class="popContent" style="width: 400px; display: none">
+        <h2>
+            <asp:UpdatePanel ID="UpdatePanelreset" runat="server">
+                <ContentTemplate>
+                    <asp:Label ID="lblResetPasscodeName" runat="server"></asp:Label>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <span class="close">
+                <asp:LinkButton ID="lnkResetPasscodeClose" runat="server"></asp:LinkButton></span>
+        </h2>
+        <div class="inner">
+            <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
+                 <tr>
+                    <td>
+                        New passcode<span class="must">*</span>
+                        <br />
+                        <span style="font-size: 10px; color: GrayText">(Maximum 10 characters)</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtResetNewPasscode" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Confirm passcode<span class="must">*</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtResetConfirmPasscode" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
+                    </td>
+                   
+                
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <div style="display: inline-block">
+                            <asp:UpdatePanel ID="ResetUpdatePanel12" runat="server">
+                                <ContentTemplate>
+                                    <asp:Button ID="btnResetPassCode" runat="server" Text="Update" CssClass="btn btn-danger"
+                                        OnClientClick="return validResetPasscode();" 
+                                        onclick="btnResetPassCode_Click"/>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnResetCancelPasscode" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                        </div>
+                        <asp:Button ID="btnResetCancelPasscode" runat="server" Text="Cancel" 
+                            CssClass="btn" onclick="btnResetCancelPasscode_Click" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    
+    
+    <cc1:ModalPopupExtender ID="mdlResetPassword" runat="server" BackgroundCssClass="popupHolder"
+        CancelControlID="lnkResetPasswordClose" TargetControlID="hdnResetPassword" PopupControlID="ResetPasswordpopup">
+    </cc1:ModalPopupExtender>
+    <asp:HiddenField ID="hdnResetPassword" runat="server" />
+    <div id="ResetPasswordpopup" runat="server" class="popContent" style="width: 400px; display: none">
+        <h2>
+            <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                <ContentTemplate>
+                    <asp:Label ID="lblResetPasswordName" runat="server"></asp:Label>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <span class="close">
+                <asp:LinkButton ID="lnkResetPasswordClose" runat="server"></asp:LinkButton></span>
+        </h2>
+        <div class="inner">
+            <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
+                 <tr>
+                    <td>
+                        New Password<span class="must">*</span>
+                        <br />
+                        <span style="font-size: 10px; color: GrayText">(Maximum 10 characters)</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtResetNewPassword" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Confirm Password<span class="must">*</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtResetConfirmPassword" runat="server" MaxLength="10" TextMode="Password"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <div style="display: inline-block">
+                            <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                                <ContentTemplate>
+                                    <asp:Button ID="btnResetPassword" runat="server" Text="Update" CssClass="btn btn-danger"
+                                        OnClientClick="return validResetPassword();" 
+                                        onclick="btnResetPassword_Click"/>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnResetCancelPassword" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                        </div>
+                        <asp:Button ID="btnResetCancelPassword" runat="server" Text="Cancel" 
+                            CssClass="btn" onclick="btnResetCancelPassword_Click" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    
     </form>
+    
+  
+    
+    
 </body>
+  <script type="text/javascript">
+  
+   function validResetPasscode()
+   {
+    debugger
+          var valid=true;
+
+
+         
+           
+         if (document.getElementById('txtResetNewPasscode').value=="") {
+               alert("Please enter new passcode.");
+               valid = false;
+               document.getElementById("txtResetNewPasscode").value = "";
+               document.getElementById("txtResetNewPasscode").focus();
+           }
+
+          else if (document.getElementById('txtResetNewPasscode').value.trim().length < 1) {
+               alert("Please enter valid new passcode.");
+               valid = false;
+               document.getElementById("txtResetNewPasscode").value = "";
+               document.getElementById("txtResetNewPasscode").focus();
+           }
+
+        else if(document.getElementById('txtResetConfirmPasscode').value.trim().length < 1)
+           {
+               alert("Please enter confirm passcode .");               
+               valid=false;
+                document.getElementById("txtResetConfirmPasscode").value="";
+               document.getElementById("txtResetConfirmPasscode").focus();
+           }
+        else if (document.getElementById('txtResetConfirmPasscode').value.trim()!=document.getElementById('txtResetNewPasscode').value.trim())
+           {
+               alert("New passcode and confirm passcode should be match .");               
+               valid=false;
+               document.getElementById("txtResetConfirmPasscode").value="";
+                document.getElementById("txtResetNewPasscode").value="";
+               document.getElementById("txtNewPasscode").focus();
+           }
+  
+           return valid;
+   }
+   
+   
+     function validResetPassword()
+   {
+    debugger
+          var valid=true;
+  
+         if (document.getElementById('txtResetNewPassword').value=="") {
+               alert("Please enter new password.");
+               valid = false;
+               document.getElementById("txtResetNewPassword").value = "";
+               document.getElementById("txtResetNewPassword").focus();
+           }
+
+          else if (document.getElementById('txtResetNewPassword').value.trim().length < 1) {
+               alert("Please enter valid new password.");
+               valid = false;
+               document.getElementById("txtResetNewPassword").value = "";
+               document.getElementById("txtResetNewPassword").focus();
+           }
+
+        else if(document.getElementById('txtResetConfirmPassword').value.trim().length < 1)
+           {
+               alert("Please enter confirm password .");               
+               valid=false;
+                document.getElementById("txtResetConfirmPassword").value="";
+               document.getElementById("txtResetConfirmPassword").focus();
+           }
+        else if (document.getElementById('txtResetConfirmPassword').value.trim()!=document.getElementById('txtResetNewPassword').value.trim())
+           {
+               alert("New passcode and confirm password should be match .");               
+               valid=false;
+               document.getElementById("txtResetConfirmPassword").value="";
+                document.getElementById("txtResetNewPassword").value="";
+               document.getElementById("txtNewPassword").focus();
+           }
+  
+           return valid;
+   }
+   
+  
+  
+  </script>
+
+
+
+
 </html>

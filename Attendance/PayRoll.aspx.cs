@@ -79,7 +79,11 @@ namespace Attendance
                     {
                         lblFreeze.Text = "This is tentative attendance report.Some or part of the attendance not yet freezed";
                     }
-
+                    if(Session["LocationName"].ToString()=="INBH"||Session["LocationName"].ToString()=="INDG")
+                    {
+                        grdPayRoll.Columns[8].Visible = false;
+                        grdPayRoll.Columns[9].Visible = false;
+                    }
 
                     GetReport(EndDate, StartDate.AddDays(-1), userid);
                     BindListOfNewEmployee();
@@ -101,7 +105,7 @@ namespace Attendance
             {
                 // divNewEmp.Style["display"] = "block";
                 //divNewEmp.Visible = true;
-                lblNewEmp.Text = "NOTE: LIST OF NEW EMPLOYEE";
+                lblNewEmp.Text = "New employee(s) data :";
                 grdNewEmp.DataSource = dt;
                 grdNewEmp.DataBind();
             }
@@ -227,6 +231,8 @@ namespace Attendance
                 DataSet ds = obj.GetPayrollReport(StartDate, EndTime, userid);
                 lblWeekPayrollReport.Text = "( " + StartDate.ToString("MM/dd/yyyy") + " - " + EndTime.ToString("MM/dd/yyyy") + " )";
                 GetEditHistory(StartDate, EndTime);
+                lblTotal.Text = ds.Tables[0].Rows[0]["LocDescriptiom"].ToString().Trim()==""?"Employee record count: " + ds.Tables[0].Rows.Count.ToString().Trim(): ds.Tables[0].Rows[0]["LocDescriptiom"].ToString().Trim() +"  location; Employee record count: " + ds.Tables[0].Rows.Count.ToString().Trim();
+                lblReportDate.Text="Report generated at  <b>" + Convert.ToDateTime(lblDate2.Text).ToString("MM/dd/yyyy hh:mm:ss tt") + "</b>  by  <b>" + Session["EmpName"].ToString().Trim()+"</b>";
                 grdPayRoll.DataSource = ds.Tables[0];
                 grdPayRoll.DataBind();
             }
@@ -274,7 +280,7 @@ namespace Attendance
                 if (dtChanges.Rows.Count > 0)
                 {
                     //dvChanges.Style["display"] = "block";
-                    lblChanges.Text = "NOTE: LIST OF CHANGES";
+                    lblChanges.Text = "List of Changes during this period :";
                     DataTable dt = dtChanges;
                     DataView dv = dt.DefaultView;
                     DataTable dtDistinctID = dt.DefaultView.ToTable(true, "EMPID", "empname");
@@ -315,6 +321,11 @@ namespace Attendance
 
                     Label lblTerminatedDate = (Label)e.Row.FindControl("lblTerminatedDate");
                     lblTerminatedDate.Text = lblTerminatedDate.Text == "01/01/1900" ? "" : lblTerminatedDate.Text;
+
+
+
+                    Label lblgrdSSN = (Label)e.Row.FindControl("lblgrdSSN");
+                    lblgrdSSN.Text = lblgrdSSN.Text == "" ? "" : GeneralFunction.FormatUsSSN(lblgrdSSN.Text);
 
                     DateTime Start = Convert.ToDateTime(ViewState["StartRptDt"]);
                     DateTime End = Convert.ToDateTime(ViewState["EndRptDt"]);
@@ -555,8 +566,8 @@ namespace Attendance
                 Phrase p1 = new Phrase(beginning);
                 Phrase p2 = new Phrase();
                 pdfDoc.Add(new Paragraph(p1));
-                pdfDoc.Add(new Paragraph(30f, "Created at" + Convert.ToDateTime(lblDate2.Text).ToString("MM/dd/yyyy hh:mm:ss tt") + " by " + Session["EmpName"].ToString().Trim()));
-                pdfDoc.AddTitle(PayrollDate);
+                //pdfDoc.Add(new Paragraph(30f, "Created at" + Convert.ToDateTime(lblDate2.Text).ToString("MM/dd/yyyy hh:mm:ss tt") + " by " + Session["EmpName"].ToString().Trim()));
+                //pdfDoc.AddTitle(PayrollDate);
                 htmlparser.Parse(sr);
                 pdfDoc.Close();
                 Response.Write(pdfDoc);
@@ -669,21 +680,21 @@ namespace Attendance
 
                     if (hdnAddress2.Value != "")
                     {
-                        lblAddress.Text = lblAddress.Text + "</br>" + hdnAddress2.Value;
+                        lblAddress.Text = lblAddress.Text + ",</br>" + hdnAddress2.Value;
                     }
                     if ((hdnState.Value != "") && (hdnState.Value != "UN"))
                     {
-                        lblAddress.Text = lblAddress.Text + "</br>" + hdnState.Value;
+                        lblAddress.Text = lblAddress.Text + ",</br>" + hdnState.Value;
                         if (hdnZip.Value != "")
                         {
-                            lblAddress.Text = lblAddress.Text + ", " + hdnZip.Value;
+                            lblAddress.Text = lblAddress.Text + " " + hdnZip.Value+".";
                         }
                     }
                     else
                     {
                         if (hdnZip.Value != "")
                         {
-                            lblAddress.Text = lblAddress.Text + "</br> " + hdnZip.Value;
+                            lblAddress.Text = lblAddress.Text + ",</br> " + hdnZip.Value;
                         }
                     }
 

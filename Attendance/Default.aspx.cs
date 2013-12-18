@@ -19,6 +19,7 @@ namespace Attendance
     public partial class _Default : System.Web.UI.Page
     {
         //public string cn = ConfigurationManager.ConnectionStrings["AttendanceConn"].ToString();
+        //public string cn = ConfigurationManager.ConnectionStrings["AttendanceConn"].ToString();
         SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["AttendanceConn"].ToString());
         Business business = new Business();
         int value = 0;
@@ -34,119 +35,77 @@ namespace Attendance
             SqlCommand cmd = null;
             try
             {
-                if (Session["LocationName"] != null)
+                DataSet dsLocation = new DataSet();
+                String strHostName = Request.UserHostAddress.ToString();
+                string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
+                dsLocation = business.GetLocationDetailsByIp(strIp);
+                if (dsLocation.Tables.Count > 0)
                 {
-                    string p = Session["LocationName"].ToString();
-
-                    if (p != null)
+                    if (dsLocation.Tables[0].Rows.Count > 0)
                     {
-                        if (cn.State != ConnectionState.Open)
-                            cn.Open();
-                        cmd = new SqlCommand("USP_GetLocationIDByLocName", cn);
-                        cmd.Parameters.AddWithValue("@LocationName", Session["LocationName"].ToString());
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
+
+                        int TimeZoneId = Convert.ToInt32(dsLocation.Tables[0].Rows[0]["TimeZoneId"].ToString());
+                        Session["TimeZoneID"] = TimeZoneId;
+                        string timezone = "";
+                        if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
                         {
-                            value = Convert.ToInt32(dr["LocationId"].ToString());
+                            timezone = "Eastern Standard Time";
                         }
-                        dr.Close();
-                    }
-                }
-            }
-            catch { }
+                        else
+                        {
+                            timezone = "India Standard Time";
+                        }
+                        DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
 
-            //mdlLoginpopup.Show();
-            String strHostName = Request.UserHostAddress.ToString();
-            string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
-            DataSet dsLocation = new DataSet();
+                        var CurentDatetime = ISTTime;
 
-            if (cn.State != ConnectionState.Open)
-            cn.Open();
-            cmd = new SqlCommand("USP_GetLocationIDByIP", cn);
-            cmd.Parameters.AddWithValue("@Ipaddress", strIp);
-            cmd.CommandType = CommandType.StoredProcedure;
+                        lblDate2.Text = CurentDatetime.ToString("dddd MMMM dd yyyy, hh:mm:ss tt ");
 
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
-            {
-                value = Convert.ToInt32(dr["LocationId"].ToString());
-            }
-            dr.Close();
+                        lblDate.Text = CurentDatetime.TimeOfDay.TotalSeconds.ToString();
+
+                        //  lblTimeZoneName.Text = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
+                        Session["TimeZoneName"] = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
+                        lblTimeZoneName.Text = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
 
 
-            dsLocation = business.GetLocationNameByIpAdress(value);
+                        lblLocation.Text = dsLocation.Tables[0].Rows[0]["LocationName"].ToString();
 
-            //  business.SetActualStatus(dsLocation.Tables[0].Rows[0]["LocationName"].ToString());
-            if (dsLocation.Tables.Count > 0)
-            {
-                if (dsLocation.Tables[0].Rows.Count > 0)
-                {
+                        Session["LocationName"] = dsLocation.Tables[0].Rows[0]["LocationName"].ToString().Trim();
 
-                    int TimeZoneId = Convert.ToInt32(dsLocation.Tables[0].Rows[0]["TimeZoneId"].ToString());
-                    Session["TimeZoneID"] = TimeZoneId;
-                    string timezone = "";
-                    if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
-                    {
-                        timezone = "Eastern Standard Time";
+
+                        string LocationName = lblLocation.Text;
+                        DataSet dsImages = new DataSet();
+                        dsImages = business.BindData(LocationName, CurentDatetime);
+                        Session["Employee"] = dsImages;
+                        rpEmp.DataSource = dsImages;
+                        rpEmp.DataBind();
+
+                        DataSet dsImages1 = new DataSet();
+                        dsImages1 = business.BindLogin(LocationName, CurentDatetime);
+                        Session["LoginEmployee"] = dsImages1;
+                        rpLogin.DataSource = dsImages1;
+                        rpLogin.DataBind();
+
+                        DataSet dsImages2 = new DataSet();
+                        dsImages2 = business.BindLogout(LocationName, CurentDatetime);
+                        rplogout.DataSource = dsImages2;
+                        rplogout.DataBind();
+
                     }
                     else
                     {
-                        timezone = "India Standard Time";
+                        System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "stopLoading();", true);
                     }
-                    DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
-
-                    var CurentDatetime = ISTTime;
-                   
-                    lblDate2.Text = CurentDatetime.ToString("dddd MMMM dd yyyy, hh:mm:ss tt ");
-                   
-                    lblDate.Text = CurentDatetime.TimeOfDay.TotalSeconds.ToString();
-                   
-                  //  lblTimeZoneName.Text = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
-                    Session["TimeZoneName"] = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
-                    lblTimeZoneName.Text = dsLocation.Tables[0].Rows[0]["TimeZoneName"].ToString();
-                 
-
-                    lblLocation.Text = dsLocation.Tables[0].Rows[0]["LocationName"].ToString();
-
-                    Session["LocationName"] = dsLocation.Tables[0].Rows[0]["LocationName"].ToString().Trim();
-                    
-
-                    string LocationName = lblLocation.Text;
-                    DataSet dsImages = new DataSet();
-                    dsImages = business.BindData(LocationName, CurentDatetime);
-                    Session["Employee"] = dsImages;
-                    rpEmp.DataSource = dsImages;
-                    rpEmp.DataBind();
-
-                    DataSet dsImages1 = new DataSet();
-                    dsImages1 = business.BindLogin(LocationName, CurentDatetime);
-                    Session["LoginEmployee"] = dsImages1;
-                    rpLogin.DataSource = dsImages1;
-                    rpLogin.DataBind();
-
-                    DataSet dsImages2 = new DataSet();
-                    dsImages2 = business.BindLogout(LocationName, CurentDatetime);
-                    rplogout.DataSource = dsImages2;
-                    rplogout.DataBind();
-
                 }
                 else
                 {
                     System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "stopLoading();", true);
 
-                    //  System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "alert('Your request has been received.we will get back to you soon');", true);
-                    // System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "alert('Your Ipaddress is not registered');", true);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "stopLoading();", true);
-                //  System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "alert('Your Ipaddress is not registered');", true);
             }
-
-
-
 
         }
 
@@ -163,11 +122,6 @@ namespace Attendance
                 HiddenField hdnLogin = (HiddenField)e.Item.FindControl("hdnLogin");
                 Label lblBindLogin = (Label)e.Item.FindControl("hdnDeptName2");
                 Label hdnDesgLogin = (Label)e.Item.FindControl("hdnDesignationLogin");
-
-
-
-
-
                 Image imgAgent = (Image)e.Item.FindControl("imgPicture1");
                 if (imgAgent.ImageUrl == "")
                 {
@@ -214,12 +168,11 @@ namespace Attendance
         public void subm_Click(object sender, EventArgs e)
         {
 
-            //string logintin = ""; //, scdliStartTime = "", scdliEndTime = "";
             string id = ""; string LocationName = lblLocation.Text;
             int bnew = 0;
             entities.UserID = Convert.ToInt32(txtUserID.Text);
 
-            //entities.LoginDate =  DateTime.UtcNow.AddHours(-4);
+
             string timezone = "";
             if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
             {
@@ -232,30 +185,23 @@ namespace Attendance
             }
             DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
             entities.LoginDate = ISTTime;
-
-
             if (cn.State != ConnectionState.Open)
                 cn.Open();
             SqlCommand cmd = new SqlCommand();
             SqlDataReader dr;
             cmd = new SqlCommand("USP_ChkForLoginByDate", cn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@CurrenDate",entities.LoginDate);
-              cmd.Parameters.AddWithValue("@Userid",entities.UserID);
+            cmd.Parameters.AddWithValue("@CurrenDate", entities.LoginDate);
+            cmd.Parameters.AddWithValue("@Userid", entities.UserID);
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                //mdlLoginpopup.Hide();
-                // System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "Duplicate();", true);
+
                 Duplicate.Text = "true";
                 lblLIError.Text = "You are already Signed In.You cannot signed in again.";
-
-                //System.Web.UI.ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Script", "changeSuccess1(" + bnew + ");", true);
             }
             else
             {
-
-               // DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
                 entities.LoginDate = ISTTime;
                 entities.LoginNotes = txtNpte.Text;
                 entities.LocationName = lblLocation.Text;
@@ -277,8 +223,6 @@ namespace Attendance
                         rpLogin.DataBind();
                         mdlLoginpopup.Hide();
                         bnew = 1;
-
-                        //Page.Response.Redirect(HttpContext.Current.Request.Url.ToString(), true);
                     }
                     else
                     {
@@ -319,7 +263,7 @@ namespace Attendance
 
             }
             dr.Close();
-           // Page.Response.Redirect(HttpContext.Current.Request.Url.ToString(), true);
+            // Page.Response.Redirect(HttpContext.Current.Request.Url.ToString(), true);
 
         }
 
@@ -343,8 +287,8 @@ namespace Attendance
             }
 
 
-          DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
-          entities.LogOutDate = ISTTime;
+            DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+            entities.LogOutDate = ISTTime;
 
             if (cn.State != ConnectionState.Open)
                 cn.Open();
@@ -473,7 +417,7 @@ namespace Attendance
 
             }
             DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
-           
+
             Session["TodayBannerDate"] = ISTTime.ToString("MM/dd/yyyy");
             entities.passcode = txtPasswordM.Text;
             DataSet dsman = business.AuthinticateManager(entities);
@@ -486,13 +430,13 @@ namespace Attendance
                     Session["IsManage"] = dsman.Tables[0].Rows[0]["ismanage"].ToString();
                     Session["IsAdmin"] = dsman.Tables[0].Rows[0]["IsAdmin"].ToString();
                     Session["Photo"] = "~/Photos/" + dsman.Tables[0].Rows[0]["photolink"].ToString().Trim();
-                    Session["EmpName"] = dsman.Tables[0].Rows[0]["firstname"].ToString().Trim() +" "+dsman.Tables[0].Rows[0]["lastname"].ToString().Trim();
+                    Session["EmpName"] = dsman.Tables[0].Rows[0]["firstname"].ToString().Trim() + " " + dsman.Tables[0].Rows[0]["lastname"].ToString().Trim();
                     Session["ScheduleInOut"] = dsman.Tables[0].Rows[0]["StartTime"].ToString().Trim() + "-" + dsman.Tables[0].Rows[0]["EndTime"].ToString().Trim();
 
                     if (Session["IsAdmin"].ToString() == "True")
                     {
                         Response.Redirect("AdminReports.aspx");
-                       
+
                     }
                     else
                     {
@@ -508,7 +452,6 @@ namespace Attendance
 
             }
             else
-
             {
 
                 lblErrorM.Text = "Invalid emp id or password or location code";

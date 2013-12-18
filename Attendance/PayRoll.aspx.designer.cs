@@ -419,6 +419,15 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.Label lblWeekPayrollReport;
         
         /// <summary>
+        /// lblFreeze control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFreeze;
+        
+        /// <summary>
         /// txtFromDate control.
         /// </summary>
         /// <remarks>
@@ -453,15 +462,6 @@ namespace Attendance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGo;
-        
-        /// <summary>
-        /// lblFreeze control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFreeze;
         
         /// <summary>
         /// btnPDF control.
@@ -507,6 +507,24 @@ namespace Attendance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnPayrollPdf;
+        
+        /// <summary>
+        /// lblTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotal;
+        
+        /// <summary>
+        /// lblReportDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReportDate;
         
         /// <summary>
         /// grdPayRoll control.

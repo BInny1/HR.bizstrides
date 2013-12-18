@@ -170,38 +170,32 @@ namespace Attendance.BAL
             }
 
         }
-      
+
         public void SaveManagerDetails(Attendance.Entities.Entities entities)
         {
-          
+
             try
             {
                 SqlConnection con = new SqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand("USP_AddIP", con);
-               cmd.CommandType = CommandType.StoredProcedure;
-               //cmd.CommandText = ();
-               con.Open();
-               //cmd.Parameters.AddWithValue("@FirstName",entities.FirstName);
-               cmd.Parameters.AddWithValue("@LocationName",entities.LocationName);
-               cmd.Parameters.AddWithValue("@PassCode",entities.passcode);
-               cmd.Parameters.AddWithValue("@EMPID", entities.EMPID);
-               cmd.Parameters.AddWithValue("@IpAddress", entities.IpAddress);
-                //SqlDataAdapter daManager = new SqlDataAdapter();
-                //daManager.SelectCommand.Parameters.Add(new SqlParameter("@FirstName", entities.FirstName));
-                //daManager.SelectCommand.Parameters.Add(new SqlParameter("@passcode", entities.passcode));
-                //daManager.SelectCommand.Parameters.Add(new SqlParameter("@LastName", entities.LastName));
-                //daManager.SelectCommand.Parameters.Add(new SqlParameter("@LocationName", entities.LocationName));
-                //daManager.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                cmd.Parameters.AddWithValue("@LocationName", entities.LocationName);
+                cmd.Parameters.AddWithValue("@PassCode", entities.passcode);
+                cmd.Parameters.AddWithValue("@EMPID", entities.EMPID);
+                cmd.Parameters.AddWithValue("@IpAddress", entities.IpAddress);
+                cmd.Parameters.AddWithValue("@CurrentDate", entities.StartTime);
+
                 cmd.ExecuteNonQuery();
                 con.Close();
-                
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-           
-           
+
+
 
         }
 
@@ -217,10 +211,10 @@ namespace Attendance.BAL
                 con.Open();
                 //cmd.Parameters.AddWithValue("@FirstName",entities.FirstName);
                 cmd.Parameters.AddWithValue("@LocationName", entities.LocationName);
-             //   cmd.Parameters.AddWithValue("@PassCode", entities.passcode);
-               // cmd.Parameters.AddWithValue("@EMPID", entities.EMPID);
+                cmd.Parameters.AddWithValue("@CurrentDate", entities.StartTime);
+                cmd.Parameters.AddWithValue("@EMPID", entities.EMPID);
                 cmd.Parameters.AddWithValue("@IpAddress", entities.IpAddress);
-             
+
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -234,7 +228,25 @@ namespace Attendance.BAL
 
         }
 
+        public DataSet GetLocationDetailsByIp(string ipaddress)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                SqlDataAdapter daLocation = new SqlDataAdapter("USP_GetLocationIDByIP", connectionString);
+                daLocation.SelectCommand.CommandType = CommandType.StoredProcedure;
+                daLocation.SelectCommand.Parameters.Add(new SqlParameter("@Ipaddress", ipaddress));
+                DataSet dsLocation = new DataSet();
+                daLocation.Fill(dsLocation);
+                return dsLocation;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+
+        }
         public DataSet SaveLogoutDetails(Attendance.Entities.Entities objEntity, int UserLogID)
         {
             DataSet dsLogoutDet = new DataSet();
@@ -378,6 +390,28 @@ namespace Attendance.BAL
              return ds.Tables[0];
 
          }
+
+
+         public DataSet GetTimeZoneInfoByLocName(string LocationName)
+         {
+             try
+             {
+                 SqlCommand cmd = new SqlCommand();
+                 SqlDataAdapter daLocation = new SqlDataAdapter("USP_TimeZoneIDByLocation", connectionString);
+                 daLocation.SelectCommand.CommandType = CommandType.StoredProcedure;
+                 daLocation.SelectCommand.Parameters.Add(new SqlParameter("@Locationname", LocationName));
+                 DataSet dsLocation = new DataSet();
+                 daLocation.Fill(dsLocation);
+                 return dsLocation;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+
+
+         }
+
         }
        
 

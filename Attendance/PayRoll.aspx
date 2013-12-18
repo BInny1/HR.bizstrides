@@ -352,20 +352,21 @@
             <ContentTemplate>
                 <asp:Label ID="lblPayroll" runat="server" Text="Payroll report"></asp:Label>
                 <br />
-                <asp:Label ID="lblWeekPayrollReport" runat="server"></asp:Label>
+                <asp:Label ID="lblWeekPayrollReport" runat="server"></asp:Label> <br />
+               <asp:Label ID="lblFreeze" runat="server" ForeColor="Red" Font-Bold="false" style="font-size:10px;"></asp:Label>
             </ContentTemplate>
         </asp:UpdatePanel>
     </h2>
-    <div style="display: inline-block; padding: 10px;">
-        From date &nbsp;<asp:TextBox ID="txtFromDate" runat="server" Width="150"></asp:TextBox>
-        &nbsp;&nbsp; To date &nbsp;<asp:TextBox ID="txtToDate" runat="server" Width="150"></asp:TextBox>
+    <div style="display: inline-block;margin-left: 20px;">
+        <b>From date</b> &nbsp;<asp:TextBox ID="txtFromDate" runat="server" Width="150"></asp:TextBox>
+        &nbsp;&nbsp; <b>To date</b> &nbsp;<asp:TextBox ID="txtToDate" runat="server" Width="150"></asp:TextBox>
         <div style="display: inline-block;">
             <asp:UpdatePanel ID="up2" runat="server">
                 <ContentTemplate>
                     <asp:Button ID="btnGo" runat="server" Text="Go" OnClick="btnGo_Click" OnClientClick="return validateDate();"
                         CssClass="btn btn-danger btn-small right" />
                     &nbsp;
-                    <asp:Label ID="lblFreeze" runat="server" ForeColor="Red" Font-Bold="false"></asp:Label>
+                 
                     &nbsp;
                 </ContentTemplate>
             </asp:UpdatePanel>
@@ -383,6 +384,11 @@
                     <asp:UpdatePanel ID="up1" runat="server">
                         <ContentTemplate>
                             <asp:HiddenField ID="hdnPayrollPdf" runat="server" />
+                            <div>
+                            <asp:Label ID="lblTotal" runat="server" style="margin-left: 10px;"></asp:Label>
+                            &nbsp;
+                            <asp:Label ID="lblReportDate" runat="server" style="float:right;margin-right:92px;"></asp:Label>
+                            </div>
                             <asp:GridView runat="server" AutoGenerateColumns="false" ID="grdPayRoll" CssClass="table1"
                                 OnRowDataBound="grdPayRoll_RowDataBound" BorderWidth="1" CellPadding="0" CellSpacing="0"
                                 Width="800px">
@@ -446,27 +452,29 @@
                                             <asp:Label ID="lblLocation" runat="server" Text='<%#Eval("LocationName")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField SortExpression="TotalHours" HeaderText="TotalHrsWorked">
-                                        <%-- <HeaderTemplate>
-                                <asp:LinkButton ID="lblHeadActive" runat="server" Text="Active"></asp:LinkButton>
-                            </HeaderTemplate>--%>
-                                        <ItemTemplate>
+                                    <asp:TemplateField SortExpression="TotalHours" HeaderText="Hrs">
+                                     <ItemTemplate>
                                             <asp:Label ID="lblTotal" runat="server" Text='<%#Eval("TotalHours")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                     <asp:TemplateField SortExpression="SSN" HeaderText="SSN">
+                                     <ItemTemplate>
+                                            <asp:Label ID="lblgrdSSN" runat="server" Text='<%#Eval("SSN")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField SortExpression="MaritalStatus" HeaderText="FilingStatus">
+                                     <ItemTemplate>
+                                            <asp:Label ID="lblFilingStatus" runat="server" Text='<%#Eval("MaritalStatus")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField SortExpression="Isnew" HeaderText="IsNew">
-                                        <%-- <HeaderTemplate>
-                                <asp:LinkButton ID="lblHeadActive" runat="server" Text="Active"></asp:LinkButton>
-                            </HeaderTemplate>--%>
+                                        
                                         <ItemTemplate>
                                             <asp:Label ID="lblIsNew" runat="server"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField SortExpression="IsChanges" HeaderText="IsChanges">
-                                        <%-- <HeaderTemplate>
-                                <asp:LinkButton ID="lblHeadActive" runat="server" Text="Active"></asp:LinkButton>
-                            </HeaderTemplate>--%>
-                                        <ItemTemplate>
+                                      <ItemTemplate>
                                             <asp:Label ID="lblIsChanges" runat="server"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -482,7 +490,7 @@
                                 <tr>
                                     <td>
                                         <b class="headding2" style="margin-bottom: 0; padding-bottom: 0">
-                                            <asp:Label ID="lblNewEmp" runat="server"></asp:Label></b>
+                                            <asp:Label ID="lblNewEmp" runat="server" style="padding: 10px;"></asp:Label></b>
                                         <asp:GridView ID="grdNewEmp" runat="server" AutoGenerateColumns="false" CssClass="table1"
                                             onrowdatabound="grdNewEmp_RowDataBound" Width="700px" >
                                             <Columns>
@@ -548,12 +556,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td >
                                         <b class="headding2" style="margin-bottom: 0; padding-bottom: 0">
-                                            <asp:Label ID="lblChanges" runat="server"></asp:Label></b>
+                                            <asp:Label ID="lblChanges" runat="server" style="padding: 10px;"></asp:Label></b>
                                         <asp:Repeater ID="rpt1" runat="server" OnItemDataBound="rpt1_ItemDataBound">
                                             <ItemTemplate>
-                                                <div class="Agent1">
+                                                <div class="Agent1" style="margin-left:10px;">
                                                     <h4>
                                                         <asp:Label ID="lblName" runat="server" Text='<%#Eval("empname")%>'></asp:Label>&nbsp;&nbsp;
                                                         <asp:Label ID="lblEmpID" runat="server" Text='<%#Eval("EmpID")%>'></asp:Label>
@@ -579,6 +587,7 @@
                                                 </div>
                                                 <br />
                                             </ItemTemplate>
+                                           
                                         </asp:Repeater>
                                     </td>
                                 </tr>

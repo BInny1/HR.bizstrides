@@ -300,6 +300,12 @@ namespace Attendance
                 }
 
                 int UserID = Convert.ToInt32(Session["UserID"]);
+
+                objInfo.BFirstname = txtBusinessFirst.Text == "" ? objInfo.Firstname.Trim() : GeneralFunction.ToProper(txtBusinessFirst.Text.Trim());
+                objInfo.BLastname = txtBusinessLasst.Text == "" ? objInfo.Lastname.Trim() : GeneralFunction.ToProper(txtBusinessLasst.Text.Trim());
+               
+
+
                 //objInfo.EmpID = txtAddEmpID.Text.Trim();
                 objInfo.Deptname = ddlDeptment.SelectedItem.Text.ToString();
                 objInfo.Designation = txtDesignation.Text == "" ? "" : GeneralFunction.ToProper(txtDesignation.Text.Trim());
@@ -431,6 +437,11 @@ namespace Attendance
                         {
                             txtAddFirstName.Text = "";
                             txtAddLastName.Text = "";
+
+                            txtBusinessFirst.Text = "";
+                            txtBusinessLasst.Text = "";
+
+
                             txtBusinessEmail.Text = "";
                             txtDateOfBirth.Text = "";
                             txtDesignation.Text = "";
@@ -498,6 +509,11 @@ namespace Attendance
                         txtEmpPhone.Text = "";
                         txtEmpSSN.Text = "";
                         txtEmpZip.Text = "";
+
+
+                        txtBusinessFirst.Text = "";
+                        txtBusinessLasst.Text = "";
+
 
                         txtCn1Address1.Text = "";
                         txtCn1Address2.Text = "";
@@ -956,9 +972,10 @@ namespace Attendance
                 ddlSchedule.DataSource = dt;
                 ddlSchedule.DataTextField = "ScheduleType";
                 ddlSchedule.DataValueField = "ScheduleID";
+                //  ddlSchedule.Items.Add(new ListItem("Select", "0"));
 
                 ddlSchedule.DataBind();
-
+                ddlSchedule.Items.Insert(0, new ListItem("Select", "0"));
             }
             catch (Exception ex)
             {
@@ -1044,6 +1061,86 @@ namespace Attendance
             catch (Exception ex)
             {
             }
+        }
+
+
+
+        protected void lnkScheduleAdd_Click(object sender, EventArgs e)
+        {
+            mdlAddPopUp.Show();
+
+            txtScheduleEnd.Text = "";
+            txtSheduleStart.Text = "";
+            txtLunchEnd.Text = "";
+            txtLunchStart.Text = "";
+            rdFive.Checked = false;
+            rdSix.Checked = false;
+            rdSeven.Checked = false;
+            mdlSchedulepopup.Show();
+
+
+        }
+
+        protected void btnSchUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string SchStartTime = txtSheduleStart.Text.ToString().Trim();
+                string SchEndTime = txtScheduleEnd.Text.ToString().Trim();
+                string LunchStartime = txtLunchStart.Text.ToString().Trim();
+                string LunchEndtime = txtLunchEnd.Text.ToString().Trim();
+                bool Fivedays = false;
+                bool Sixdays = false;
+                bool Sevendays = false;
+                if (rdFive.Checked)
+                {
+                    Fivedays = true;
+                }
+                else if (rdSix.Checked)
+                {
+                    Sixdays = true;
+                }
+                else if (rdSeven.Checked)
+                {
+                    Sevendays = true;
+                }
+
+                int UserID = Convert.ToInt32(Session["UserID"]);
+
+                string timezone = "";
+                if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                {
+                    timezone = "Eastern Standard Time";
+                }
+                else
+                {
+                    timezone = "India Standard Time";
+
+                }
+                DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                String strHostName = Request.UserHostAddress.ToString();
+                string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
+
+                EmployeeBL obj = new EmployeeBL();
+                string ID = obj.AddNewSchedule(SchStartTime, SchEndTime, LunchStartime, LunchEndtime, Fivedays, Sixdays, Sevendays, strIp, ISTTime, UserID);
+                mdlSchedulepopup.Hide();
+                GetSchedules();
+                ddlSchedule.SelectedIndex = ddlSchedule.Items.IndexOf(ddlSchedule.Items.FindByValue(ID == "" ? "0" : ID));
+                mdlAddPopUp.Show();
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        protected void btnCancelSch_Click(object sender, EventArgs e)
+        {
+
+            mdlSchedulepopup.Hide();
+
         }
 
     }

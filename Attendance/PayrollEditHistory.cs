@@ -20,6 +20,8 @@ namespace Attendance
             try
             {
 
+              
+
                 if (fieldname == "SSN" || fieldname == "Deductions" || fieldname == "County" || fieldname == "Address1" || fieldname == "Address2" || fieldname == "StateID" || fieldname == "Zip" || fieldname == "firstname" ||
                     fieldname == "Lastname" || fieldname == "Date of birth" || fieldname == "EmpTypeID" || fieldname == "Salary")
                 {
@@ -316,18 +318,18 @@ namespace Attendance
                     {
                         fieldname = fieldname;
                     }
-
+                    //  SSN  Old value: 222-22-2222  New value: 111-11-1111  (changed on 11/1/2013)
                     if (oldvalue != "" && newValue != "")
                     {
-                        Proper = fieldname + " &nbsp;updated to&nbsp; " + "<b>" + newValue + "</b>" + " &nbsp;at &nbsp;" + Currentdate;
+                        Proper = fieldname + "  &nbsp;&nbsp;Old value: " + "<b>" + oldvalue + "</b>" + " &nbsp; New value:<b>" + newValue + "</b> &nbsp;(changed on <b>" + Currentdate + "</b>)";
                     }
                     else if (oldvalue == "" && newValue != "")
                     {
-                        Proper = fieldname+": <b>" + newValue + "</b>" + " &nbsp;is &nbsp;added &nbsp; " + " &nbsp;at &nbsp;" + Currentdate;
+                        Proper = fieldname + " &nbsp;&nbsp;New value:<b>" + newValue + "</b> &nbsp;(added on <b>" + Currentdate + "</b>)";
                     }
                     else if (oldvalue == "" && newValue != "")
                     {
-                        Proper = fieldname + ": <b>" + oldvalue + "</b>" + " &nbsp;is &nbsp;removed &nbsp; " + " &nbsp;at &nbsp;" + Currentdate;
+                        Proper = fieldname + "  &nbsp;&nbsp;Old value: " + "<b>" + oldvalue + "</b> &nbsp;(removed on <b>" + Currentdate + "</b>)";
                     }
                 }
 

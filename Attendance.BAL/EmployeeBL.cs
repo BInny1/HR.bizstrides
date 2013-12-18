@@ -61,6 +61,57 @@ namespace Attendance.BAL
             return success;
         }
 
+        public bool ResetPasscodeByAdmin(int userid, string ip, string newpasscode,DateTime currentDate,string EmpID)
+        {
+            bool success = false;
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AttendanceConn"].ToString());
+                con.Open();
+                SqlCommand command = new SqlCommand("[USP_ResetPasscodeByAdmin]", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@changedbyid", SqlDbType.Int).Value = userid;
+                command.Parameters.Add("@Empid", SqlDbType.VarChar).Value = EmpID;
+                command.Parameters.Add("@ipaddress", SqlDbType.VarChar).Value = ip;
+                command.Parameters.Add("@NewPasscode", SqlDbType.VarChar).Value = newpasscode;
+                command.Parameters.Add("@updateDate", SqlDbType.DateTime).Value = currentDate;
+                command.ExecuteNonQuery();
+                con.Close();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+            }
+            return success;
+        }
+
+
+        public bool ResetPassWordByAdmin(int userid, string ip, string newPwd, DateTime currentDate, string EmpID)
+        {
+            bool success = false;
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AttendanceConn"].ToString());
+                con.Open();
+                SqlCommand command = new SqlCommand("[USP_ResetpasswordByAdmin]", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@changedbyid", SqlDbType.Int).Value = userid;
+                command.Parameters.Add("@Empid", SqlDbType.VarChar).Value = EmpID;
+                command.Parameters.Add("@ipaddress", SqlDbType.VarChar).Value = ip;
+                command.Parameters.Add("@NewPwd", SqlDbType.VarChar).Value = newPwd;
+                command.Parameters.Add("@updateDate", SqlDbType.DateTime).Value = currentDate;
+                command.ExecuteNonQuery();
+                con.Close();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+            }
+            return success;
+        }
+
         public DataTable GetEmployyeDetailsByUserID(int userid)
         {
             DataSet ds = new DataSet();

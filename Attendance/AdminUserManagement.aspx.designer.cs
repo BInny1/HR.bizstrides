@@ -392,6 +392,24 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.TextBox txtAddLastName;
         
         /// <summary>
+        /// txtBusinessFirst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBusinessFirst;
+        
+        /// <summary>
+        /// txtBusinessLasst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBusinessLasst;
+        
+        /// <summary>
         /// ddlEmpType control.
         /// </summary>
         /// <remarks>
@@ -401,6 +419,15 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.DropDownList ddlEmpType;
         
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
         /// ddlSchedule control.
         /// </summary>
         /// <remarks>
@@ -408,6 +435,15 @@ namespace Attendance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSchedule;
+        
+        /// <summary>
+        /// lnkScheduleAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkScheduleAdd;
         
         /// <summary>
         /// ddlDeptment control.
@@ -1562,30 +1598,57 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.TextBox txtLunchEnd;
         
         /// <summary>
-        /// UpdatePanel2 control.
+        /// rdFive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.WebControls.RadioButton rdFive;
         
         /// <summary>
-        /// Button1 control.
+        /// rdSix control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.RadioButton rdSix;
         
         /// <summary>
-        /// Button2 control.
+        /// rdSeven control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.RadioButton rdSeven;
+        
+        /// <summary>
+        /// upSch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upSch;
+        
+        /// <summary>
+        /// btnSchUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSchUpdate;
+        
+        /// <summary>
+        /// btnCancelSch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelSch;
     }
 }

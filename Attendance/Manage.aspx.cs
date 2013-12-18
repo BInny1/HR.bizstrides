@@ -68,9 +68,27 @@ namespace Attendance
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-
+                string timezone = "";
                 entities.EMPID = txtEmpId.Text;
                 entities.LocationName = txtLocationNme.Text;
+                DataSet ds = business.GetTimeZoneInfoByLocName(entities.LocationName.ToUpper().Trim());
+                if (ds.Tables.Count > 0)
+                {
+                    int TimeZoneID = Convert.ToInt32(ds.Tables[0].Rows[0]["TimeZoneId"].ToString());
+
+                    if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                    {
+                        timezone = "Eastern Standard Time";
+                    }
+                    else
+                    {
+                        timezone = "India Standard Time";
+                    }
+                    DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                    entities.StartTime = ISTTime;
+                }
+
                 string loc = txtLocationNme.Text;
                 Session["LocationName"] = loc;
                 entities.passcode = txtPass.Text;
@@ -104,25 +122,6 @@ namespace Attendance
 
             }
             dr.Close();
-
-
-
-
-            // if (dsManager.Tables.Count > 0)
-            //{
-            //    if (dsManager.Tables[0].Rows.Count > 0)
-            //    {
-            //        txtUsername.Text=dsManager.Tables
-            //id = dsManager.Tables[0].Rows[0]["LogUserID"].ToString();
-
-            // loginID.Text = ds.Tables[0].Rows[0]["LogUserID"].ToString();
-            // logintin1.Text = ds.Tables[0].Rows[0]["Logindate"].ToString();
-            // DataSet dsImages1 = new DataSet();
-            // dsImages1 = business.BindLogin();
-            // rpLogin.DataSource = dsImages1;
-            // rpLogin.DataBind();
-            // mdlLoginpopup.Hide();
-            // bnew = 1;
 
 
 

@@ -18,6 +18,15 @@
 
     <script src="js/datetimepicker_css.js" type="text/javascript"></script>
 
+    <script>
+    
+        $(function(){
+            $('.popupHolder2').css('z-index','100002')
+            $('.popupContent2').css('z-index','100003')
+        })
+        
+    </script>
+
     <script type="text/javascript" language="javascript">
        
        
@@ -566,6 +575,131 @@
        }
     
     
+         function validSchedules()
+      {
+         debugger
+          var valid=true;
+
+           var SchStart=$.trim($('#txtSheduleStart').val())
+           var SchEnd=$.trim($('#txtScheduleEnd').val())
+           var LunchStart=$.trim($('#txtLunchStart').val())
+           var LunchEnd=$.trim($('#txtLunchEnd').val())
+           
+           //var str = SchStart.toString();
+           SchStart = SchStart.replace(/AM/g, " AM");
+           SchStart = SchStart.replace(/PM/g, " PM");
+           
+           //var str = SchEnd.toString();
+           SchEnd = SchEnd.replace(/AM/g, " AM");
+           SchEnd = SchEnd.replace(/PM/g, " PM");
+           
+           //var str = LunchStart.toString();
+           LunchStart = LunchStart.replace(/AM/g, " AM");
+           LunchStart = LunchStart.replace(/PM/g, " PM");
+           
+           //var str = LunchEnd.toString();
+           LunchEnd = LunchEnd.replace(/AM/g, " AM");
+           LunchEnd = LunchEnd.replace(/PM/g, " PM");
+           
+           if (document.getElementById('txtSheduleStart').value.trim()=="")
+           {
+               alert("Please schedule start time.");               
+               valid=false;
+               document.getElementById("txtSheduleStart").value = "";
+               document.getElementById("txtSheduleStart").focus();
+           }
+
+        else if (document.getElementById('txtSheduleStart').value.trim().length < 1)
+           {
+               alert("Please enter valid schedule start time.");               
+               valid=false;
+               document.getElementById("txtSheduleStart").value = "";
+               document.getElementById("txtSheduleStart").focus();
+           }
+           
+            else if (document.getElementById('txtScheduleEnd').value.trim()=="")
+           {
+               alert("Please enter valid schedule end time.");               
+               valid=false;
+               document.getElementById("txtScheduleEnd").value = "";
+               document.getElementById("txtScheduleEnd").focus();
+           }
+           
+            else if (document.getElementById('txtScheduleEnd').value.trim().length < 1)
+           {
+               alert("Please enter valid schedule end time.");               
+               valid=false;
+               document.getElementById("txtScheduleEnd").value = "";
+               document.getElementById("txtScheduleEnd").focus();
+           }
+   
+        else if (document.getElementById('txtLunchStart').value.trim().length < 1) {
+               alert("Please enter lunch start time.");
+               valid = false;
+               document.getElementById("txtLunchStart").value = "";
+               document.getElementById("txtLunchStart").focus();
+           }
+
+          else if (document.getElementById('txtLunchEnd').value.trim().length < 1) {
+               alert("Please enter lunch end time.");
+               valid = false;
+               document.getElementById("txtLunchEnd").value = "";
+               document.getElementById("txtLunchEnd").focus();
+           }
+           
+            else if (document.getElementById('rdFive').checked==false &&document.getElementById('rdSix').checked==false &&document.getElementById('rdSeven').checked==false){
+               alert("Please choose days.");
+               valid = false;
+               //document.getElementById("rdFive").value = "";
+               document.getElementById("rdFive").focus();
+           }
+           
+           
+           
+         else if(Date.parse("01/01/2000 "+SchStart)>=Date.parse("01/01/2000 "+SchEnd))
+         {
+           alert("Schedule start time should be greater than end time");
+           valid=false;
+            document.getElementById("txtScheduleEnd").value = "";
+            document.getElementById("txtScheduleEnd").focus();
+         }
+           
+           
+           else if(Date.parse("01/01/2000 "+LunchStart)>=Date.parse("01/01/2000 "+LunchEnd))
+         {
+           alert("Lunch start time should be greater than end time");
+           valid=false;
+            document.getElementById("txtLunchEnd").value = "";
+            document.getElementById("txtLunchEnd").focus();
+         }
+           
+            else if(!((Date.parse("01/01/2000 "+SchStart)<=Date.parse("01/01/2000 "+LunchStart))&&(Date.parse("01/01/2000 "+LunchStart)<=Date.parse("01/01/2000 "+SchEnd))))
+         {
+           alert("Lunch start time should be in b/w schedule start and end time");
+           valid=false;
+            document.getElementById("txtLunchStart").value = "";
+            document.getElementById("txtLunchStart").focus();
+         }
+           
+            else if(!((Date.parse("01/01/2000 "+SchStart)<=Date.parse("01/01/2000 "+LunchEnd))&&(Date.parse("01/01/2000 "+LunchEnd)<=Date.parse("01/01/2000 "+SchEnd))))
+         {
+           alert("Lunch end time should be in b/w schedule start and end time");
+           valid=false;
+            document.getElementById("txtLunchEnd").value = "";
+            document.getElementById("txtLunchEnd").focus();
+         }
+           
+           
+
+           return valid;
+      }
+    
+    
+    
+    
+    
+    
+    
     
     
     </script>
@@ -658,38 +792,38 @@
             Employee management
         </h2>
         <div>
-          <div style="display: inline-block;">
-            <div style="display: inline-block; margin-left: 10px;">
-                <asp:UpdatePanel ID="upSelect" runat="server">
-                    <ContentTemplate>
-                        <b>Status </b>&nbsp;&nbsp;
-                        <asp:DropDownList ID="ddlSelect" runat="server" Width="83px" Height="23px" OnSelectedIndexChanged="ddlSelect_SelectedIndexChanged"
-                            AutoPostBack="true">
-                            <asp:ListItem Value="2">All</asp:ListItem>
-                            <asp:ListItem Value="1">Active</asp:ListItem>
-                            <asp:ListItem Value="0">Inactive</asp:ListItem>
-                        </asp:DropDownList>
-                           </ContentTemplate>
-                </asp:UpdatePanel>
+            <div style="display: inline-block;">
+                <div style="display: inline-block; margin-left: 10px;">
+                    <asp:UpdatePanel ID="upSelect" runat="server">
+                        <ContentTemplate>
+                            <b>Status </b>&nbsp;&nbsp;
+                            <asp:DropDownList ID="ddlSelect" runat="server" Width="83px" Height="23px" OnSelectedIndexChanged="ddlSelect_SelectedIndexChanged"
+                                AutoPostBack="true">
+                                <asp:ListItem Value="2">All</asp:ListItem>
+                                <asp:ListItem Value="1">Active</asp:ListItem>
+                                <asp:ListItem Value="0">Inactive</asp:ListItem>
+                            </asp:DropDownList>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            <div style="display: inline-block; margin-left: 10px;">
-                         <asp:UpdatePanel ID="UpdateLocation" runat="server">
-                         <ContentTemplate>
-                           <b> <asp:Label ID="lblGrdLocaton" runat="server" Text="Location" ></asp:Label></b>&nbsp;&nbsp;
-                           <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack="true" Width="83px" Height="23px"
-                               AppendDataBoundItems="true" 
-                               onselectedindexchanged="ddlLocation_SelectedIndexChanged">
-                            <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                        </asp:DropDownList>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block; margin-left: 10px;">
+                    <asp:UpdatePanel ID="UpdateLocation" runat="server">
+                        <ContentTemplate>
+                            <b>
+                                <asp:Label ID="lblGrdLocaton" runat="server" Text="Location"></asp:Label></b>&nbsp;&nbsp;
+                            <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack="true" Width="83px"
+                                Height="23px" AppendDataBoundItems="true" OnSelectedIndexChanged="ddlLocation_SelectedIndexChanged">
+                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                            </asp:DropDownList>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
             </div>
-            </div>
-            <asp:LinkButton ID="lnkAddUser" runat="server" Text="Add Employee" OnClick="lnkAddUser_Click" style="margin-top: -36px;"
-                CssClass="btn btn-danger w997"></asp:LinkButton>
+            <asp:LinkButton ID="lnkAddUser" runat="server" Text="Add Employee" OnClick="lnkAddUser_Click"
+                Style="margin-top: -36px;" CssClass="btn btn-danger w997"></asp:LinkButton>
         </div>
-          <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdateLocation"
+        <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdateLocation"
             DisplayAfter="0">
             <ProgressTemplate>
                 <div id="spinner">
@@ -755,6 +889,7 @@
                                 <asp:LinkButton ID="lblEmpID" runat="server" Text='<%#Eval("empid")%>' CommandName="user"
                                     CommandArgument='<%#Eval("userid")%>'></asp:LinkButton>
                             </ItemTemplate>
+                              <ItemStyle Width="50" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="Firstname" HeaderText="Name">
                             <%--   <HeaderTemplate>
@@ -764,7 +899,9 @@
                                 <asp:Label ID="lblEmpFirstname" runat="server" Text='<%#Eval("Firstname")%>'></asp:Label>
                                 <asp:Label ID="lblEmpLastname" runat="server" Text='<%#Eval("lastname")%>' Visible="false"></asp:Label>
                                 <asp:HiddenField ID="hdnPhoto" runat="server" Value='<%#Eval("photolink")%>' />
+                                 
                             </ItemTemplate>
+                            <ItemStyle Width="150" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="JoiningDate" HeaderText="StartDt">
                             <%--<HeaderTemplate>
@@ -773,6 +910,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblStartedDate" runat="server" Text='<%# Bind("JoiningDate", "{0:MM/dd/yyyy}") %>'></asp:Label>
                             </ItemTemplate>
+                             <ItemStyle Width="60" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="TerminatedDt" HeaderText="TermDt">
                             <%--   <HeaderTemplate>
@@ -781,6 +919,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblTerminatedDate" runat="server" Text='<%#Bind("TermDate","{0:MM/dd/yyyy}") %>'></asp:Label>
                             </ItemTemplate>
+                             <ItemStyle Width="60" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="TermReason">
                             <%-- <HeaderTemplate>
@@ -789,6 +928,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblTermReason" runat="server" Text='<%#Eval("TermReason")%>'></asp:Label>
                             </ItemTemplate>
+                             <ItemStyle Width="130" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="DeptName" HeaderText="Department">
                             <%--  <HeaderTemplate>
@@ -797,6 +937,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblDept" runat="server" Text='<%#Eval("DeptName")%>'></asp:Label>
                             </ItemTemplate>
+                             <ItemStyle Width="130" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="designation" HeaderText="Designation">
                             <%--  <HeaderTemplate>
@@ -805,6 +946,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblDesignation" runat="server" Text='<%#Eval("designation")%>'></asp:Label>
                             </ItemTemplate>
+                            <ItemStyle Width="130" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="IsActive" HeaderText="Active">
                             <%-- <HeaderTemplate>
@@ -813,6 +955,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblActvie" runat="server" Text='<%#Eval("IsActive")%>'></asp:Label>
                             </ItemTemplate>
+                               <ItemStyle Width="50" />
                         </asp:TemplateField>
                         <%--  <asp:TemplateField>
                     <HeaderTemplate>
@@ -881,25 +1024,62 @@
                 <h4 class="ppHed acc">
                     Employee Details <span class="pls">-</span></h4>
                 <div class="ppHedContent">
-                    <table style="width: 90%; border-collapse: collapse; margin-left: 10px;">
+                    <table style="width: 92%; border-collapse: collapse; margin-left: 10px;">
                         <tr>
-                            <td style="width: 100px">
-                                First name<span class="must">*</span>
+                            <td colspan="2">
+                                <fieldset class="popupFieldSet">
+                                    <legend>Personal</legend>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 100px">
+                                                First name<span class="must">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtAddFirstName" runat="server" MaxLength="50" TabIndex="1"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Last name<span class="must">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtAddLastName" runat="server" MaxLength="50" TabIndex="2"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
                             </td>
-                            <td>
-                                <asp:TextBox ID="txtAddFirstName" runat="server" MaxLength="50" TabIndex="1"></asp:TextBox>
+                            <td style="width: 30px;">
+                                &nbsp;
                             </td>
-                            <td style="width: 30px">
-                            </td>
-                            <td style="width: 100px">
-                                Last name<span class="must">*</span>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtAddLastName" runat="server" MaxLength="50" TabIndex="2"></asp:TextBox>
+                            <td colspan="2">
+                                <fieldset class="popupFieldSet">
+                                    <legend>Business</legend>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 100px">
+                                                First name
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtBusinessFirst" runat="server" MaxLength="50" TabIndex="3"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px">
+                                                Last name
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtBusinessLasst" runat="server" MaxLength="50" TabIndex="4"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                        </table> </fieldset>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="5">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 114px;">
                                 Employee type<span class="must">*</span>
                             </td>
                             <td>
@@ -908,17 +1088,22 @@
                                     <asp:ListItem Text="Select" Value="0"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
-                            <td>
+                            <td style="width: 30px;">
+                                &nbsp;
                             </td>
-                            <td>
+                            <td style="width: 115px;">
                                 Schedule<span class="must">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
-                                    TabIndex="4">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                </asp:DropDownList>
-                                <%--<asp:LinkButton ID="lnkScheduleAdd" runat="server" Text="Add new schedule"></asp:LinkButton>--%>
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <ContentTemplate>
+                                        <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true" TabIndex="6">
+                                        </asp:DropDownList>
+                                        &nbsp;&nbsp;
+                                        <asp:LinkButton ID="lnkScheduleAdd" runat="server" Text="Add new" OnClick="lnkScheduleAdd_Click"></asp:LinkButton>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </td>
                             </td>
                         </tr>
                         <tr>
@@ -986,7 +1171,7 @@
                             </td>
                             <td style="width: 280px">
                                 <asp:DropDownList ID="ddlWagetype" runat="server" TabIndex="11" AppendDataBoundItems="true">
-                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                             <td style="width: 30px">
@@ -1010,8 +1195,8 @@
                                 Filling status<span class="must">*</span>
                             </td>
                             <td style="width: 280px">
-                                <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" 
-                                    TabIndex="13" />Single &nbsp;&nbsp;
+                                <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" TabIndex="13" />Single
+                                &nbsp;&nbsp;
                                 <asp:RadioButton ID="rdMarried" runat="server" GroupName="MaritalStatus" TabIndex="14" />Married
                             </td>
                             <td style="width: 30px">
@@ -1046,8 +1231,8 @@
                                 Gender<span class="must">*</span>
                             </td>
                             <td style="width: 280px">
-                                <asp:RadioButton ID="rdGenderMale" runat="server" GroupName="Gender" 
-                                    TabIndex="16" />Male &nbsp;&nbsp;
+                                <asp:RadioButton ID="rdGenderMale" runat="server" GroupName="Gender" TabIndex="16" />Male
+                                &nbsp;&nbsp;
                                 <asp:RadioButton ID="rdGenderFeMale" runat="server" GroupName="Gender" TabIndex="17" />Female
                             </td>
                             <td style="width: 30px">
@@ -1852,11 +2037,12 @@
     </div>
     <!--Change password popup End-->
     <!--add new schedule popup-->
-    <cc1:ModalPopupExtender ID="mdlSchedulepopup" runat="server" BackgroundCssClass="popupHolder"
+    <cc1:ModalPopupExtender ID="mdlSchedulepopup" runat="server" BackgroundCssClass="popupHolder2"
         CancelControlID="lnkScheduleClose" TargetControlID="hdnSchedulepop" PopupControlID="Schedulepop">
     </cc1:ModalPopupExtender>
     <asp:HiddenField ID="hdnSchedulepop" runat="server" />
-    <div id="Schedulepop" runat="server" class="popContent" style="width: 400px; display: none">
+    <div id="Schedulepop" runat="server" class="popContent popupContent2" style="width: 400px;
+        display: none">
         <h2>
             Add Schedule <span class="close">
                 <asp:LinkButton ID="lnkScheduleClose" runat="server"></asp:LinkButton></span>
@@ -1897,20 +2083,30 @@
                 </tr>
                 <tr>
                     <td>
+                        Days
+                    </td>
+                    <td>
+                        <asp:RadioButton ID="rdFive" runat="server" GroupName="ActiveDays" />Five&nbsp;&nbsp;
+                        <asp:RadioButton ID="rdSix" runat="server" GroupName="ActiveDays" />Six &nbsp;&nbsp;
+                        <asp:RadioButton ID="rdSeven" runat="server" GroupName="ActiveDays" />Seven &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                     </td>
                     <td>
                         <div style="display: inline-block">
-                            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <asp:UpdatePanel ID="upSch" runat="server">
                                 <ContentTemplate>
-                                    <asp:Button ID="Button1" runat="server" Text="Update" CssClass="btn btn-danger" OnClientClick="return validPwd();"
-                                        OnClick="btnUpdatePwd_Click" />
+                                    <asp:Button ID="btnSchUpdate" runat="server" Text="Update" CssClass="btn btn-danger"
+                                        OnClientClick="return validSchedules();" OnClick="btnSchUpdate_Click" />
                                 </ContentTemplate>
                                 <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="btnCancelPwd" EventName="Click" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnCancelSch" EventName="Click" />
                                 </Triggers>
                             </asp:UpdatePanel>
                         </div>
-                        <asp:Button ID="Button2" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancelPwd_Click" />
+                        <asp:Button ID="btnCancelSch" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancelSch_Click" />
                     </td>
                 </tr>
             </table>
@@ -1977,6 +2173,21 @@
 //            //timeFormat:"hh:mm tt"      
 //        });
 //        
+        
+         $('#txtSheduleStart').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtScheduleEnd').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtLunchStart').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+          $('#txtLunchEnd').timepicker({
+            timeFormat:"hh:mmTT"      
+        });
+        
+        
         
             $('#txtEditStartDate').datepicker({
             dateFormat: "mm/dd/yy"

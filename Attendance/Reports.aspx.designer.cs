@@ -221,6 +221,24 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.DropDownList ddlReportType;
         
         /// <summary>
+        /// lblGrdLocaton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGrdLocaton;
+        
+        /// <summary>
+        /// ddlLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocation;
+        
+        /// <summary>
         /// upbtns control.
         /// </summary>
         /// <remarks>

@@ -40,7 +40,7 @@ namespace Attendance.Entities
 
         public string LogOutNotes { get; set; }
 
-        public string StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         public string EndTime { get; set; }
 

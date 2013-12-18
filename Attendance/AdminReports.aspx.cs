@@ -263,6 +263,7 @@ namespace Attendance
             DataTable dtAttandence = new DataTable();
             dtAttandence.Columns.Add("empid", typeof(string));
             dtAttandence.Columns.Add("Empname", typeof(string));
+            dtAttandence.Columns.Add("PEmpname", typeof(string));
             dtAttandence.Columns.Add("Termdate", typeof(DateTime));
             dtAttandence.Columns.Add("Startdate", typeof(DateTime));
 
@@ -403,7 +404,8 @@ namespace Attendance
                             dv.RowFilter = "empid='" + ds.Tables[0].Rows[j]["empid"].ToString() + "'";
                             dtname = dv.ToTable();
                             dtAttandence.Rows[j]["empid"] = ds.Tables[0].Rows[j]["empid"].ToString();
-                            dtAttandence.Rows[j]["Empname"] = ds.Tables[0].Rows[j]["firstName"].ToString() + " " + ds.Tables[0].Rows[j]["lastname"].ToString(); ;
+                            dtAttandence.Rows[j]["Empname"] = ds.Tables[0].Rows[j]["firstName"].ToString() + " " + ds.Tables[0].Rows[j]["lastname"].ToString(); 
+                            dtAttandence.Rows[j]["PEmpname"] = ds.Tables[0].Rows[j]["PfirstName"].ToString() + " " + ds.Tables[0].Rows[j]["Plastname"].ToString(); 
                             dtAttandence.Rows[j]["Termdate"] = ds.Tables[0].Rows[j]["Termdate"].ToString() == "NULL" ? Convert.ToDateTime("01/01/1900") : ds.Tables[0].Rows[j]["Termdate"].ToString() == "" ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(Convert.ToDateTime(ds.Tables[0].Rows[j]["Termdate"]).ToString("MM/dd/yyyy"));
                             dtAttandence.Rows[j]["Startdate"] = ds.Tables[0].Rows[j]["Startdate"].ToString() == "NULL" ? Convert.ToDateTime("01/01/1900") : ds.Tables[0].Rows[j]["Startdate"].ToString() == "" ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(Convert.ToDateTime(ds.Tables[0].Rows[j]["Startdate"]).ToString("MM/dd/yyyy"));
                             dtAttandence.Rows[j]["SunSchIn"] = ds.Tables[0].Rows[j]["startTime"].ToString();
@@ -693,8 +695,15 @@ namespace Attendance
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
 
+
                     Label lblStartDate = (Label)e.Row.FindControl("lblStartDate");
                     Label lblTermDate = (Label)e.Row.FindControl("lblTermDate");
+                    Label lblPName = (Label)e.Row.FindControl("lblPName");
+                    Label lblName = (Label)e.Row.FindControl("lblName");
+
+                    string tip = CreateNameTable(lblPName.Text.Trim(), Convert.ToDateTime(lblStartDate.Text).ToString("MM/dd/yyyy"), Convert.ToDateTime(lblTermDate.Text).ToString("MM/dd/yyyy"));
+                    lblName.Attributes.Add("rel", "tooltip");
+                    lblName.Attributes.Add("title", tip);
 
                     if ((Convert.ToDateTime(lblStartDate.Text).ToString("MM/dd/yyyy") != "01/01/1900" && Convert.ToDateTime(ViewState["MonDate"]) < Convert.ToDateTime(lblStartDate.Text)))
                     {
@@ -824,7 +833,7 @@ namespace Attendance
                     HiddenField hdnMonSigninNotes = (HiddenField)e.Row.FindControl("hdnMonSigninNotes");
 
 
-                    Label lblName = (Label)e.Row.FindControl("lblName");
+                   // Label lblName = (Label)e.Row.FindControl("lblName");
                     if (hdnMonSigninNotes.Value != "")
                     {
                         string sTable = CreateSignInTable(lblName.Text, (hdnMonSigninNotes.Value));
@@ -1356,8 +1365,6 @@ namespace Attendance
             {
             }
         }
-
-
         protected void grdAttandence_RowCreated(object sender, GridViewRowEventArgs e)
         {
 
@@ -1451,7 +1458,6 @@ namespace Attendance
             {
             }
         }
-
         protected void btnPrevious_Click(object sender, EventArgs e)
         {
             try
@@ -1528,7 +1534,7 @@ namespace Attendance
                     hdnWeeklyStartDt.Value = StartDate.ToString();
                     DateTime endDate = todayDate.AddDays(-1);
 
-                    if (GeneralFunction.GetFirstDayOfWeekDate(startDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now.AddDays(-7)).ToString("MM/dd/yyyy"))
+                    if (GeneralFunction.GetFirstDayOfWeekDate(startDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now).ToString("MM/dd/yyyy"))
                     {
                         btnNext.CssClass = "btn btn-danger btn-small disabled";
                         btnNext.Enabled = false;
@@ -1599,7 +1605,6 @@ namespace Attendance
             {
             }
         }
-
         protected void btnNext_Click(object sender, EventArgs e)
         {
             try
@@ -1683,7 +1688,7 @@ namespace Attendance
 
                     btnFreeze.Visible = false;
                     lblFreeze.Visible = false;
-                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now.AddDays(-7)).ToString("MM/dd/yyyy"))
+                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now).ToString("MM/dd/yyyy"))
                     {
                         btnNext.CssClass = "btn btn-danger btn-small disabled";
                         btnNext.Enabled = false;
@@ -1747,7 +1752,6 @@ namespace Attendance
             {
             }
         }
-
         private string CreateSignInTable(string Employeename, string SignInNotes)
         {
             string strTransaction = string.Empty;
@@ -2225,8 +2229,6 @@ namespace Attendance
             }
 
         }
-
-
         protected void btnCurrent_Click(object sender, EventArgs e)
         {
             try
@@ -2302,7 +2304,7 @@ namespace Attendance
                     DateTime EndWeek = Convert.ToDateTime(ViewState["CrntWkEnd"]);
 
                     hdnWeeklyStartDt.Value = startWeek.ToString();
-                    if (GeneralFunction.GetFirstDayOfWeekDate(EndWeek).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now.AddDays(-7)).ToString("MM/dd/yyyy"))
+                    if (GeneralFunction.GetFirstDayOfWeekDate(EndWeek).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now).ToString("MM/dd/yyyy"))
                     {
                         btnNext.CssClass = "btn btn-danger btn-small disabled";
                         btnNext.Enabled = false;
@@ -2378,7 +2380,6 @@ namespace Attendance
 
             }
         }
-
         protected void ddlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
             ViewState["Location"] = ddlLocation.SelectedItem.Text.Trim();
@@ -2458,15 +2459,15 @@ namespace Attendance
 
                     // DateTime startOfMonth = new DateTime(todayDate.Year, todayDate.Month, 1);
                     DateTime startDate = GeneralFunction.GetFirstDayOfWeekDate(todayDate);
-                    DateTime StartDate = startDate.AddDays(-28);
+                    DateTime StartDate = startDate.AddDays(-21);
                     ViewState["TodayDate1"] = StartDate;
                     ViewState["CurrentWeek"] = StartDate;
                     hdnWeeklyStartDt.Value = StartDate.ToString();
-                    DateTime endDate = startDate.AddDays(-1);
+                    DateTime endDate = startDate.AddDays(6);
                     ViewState["CrntWkEnd"] = endDate;
 
 
-                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now.AddDays(-7)).ToString("MM/dd/yyyy"))
+                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now).ToString("MM/dd/yyyy"))
                     {
                         btnNext.CssClass = "btn btn-danger btn-small disabled";
                         btnNext.Enabled = false;
@@ -2558,13 +2559,10 @@ namespace Attendance
 
             }
         }
-
-
         protected void btnCancelIn_Click(object sender, EventArgs e)
         {
             mdlLoginPopUpEdit.Hide();
         }
-
         protected void btnCancleOut_Click(object sender, EventArgs e)
         {
             mdlLogoutEditPopUp.Hide();
@@ -2605,7 +2603,6 @@ namespace Attendance
                 }
           
         }
-
         protected void btnUpdateIn_Click(object sender, EventArgs e)
         {
             try
@@ -2667,21 +2664,22 @@ namespace Attendance
                 dtAttandence.Columns.Add("StatingDate", typeof(string));
                 dtAttandence.Columns.Add("TermDate", typeof(string));
                 dtAttandence.Columns.Add("TermReason", typeof(string));
-                dtAttandence.Columns.Add("Days", typeof(int));
+              
                 dtAttandence.Rows.Add();
                 Attendance.BAL.Report obj = new Report();
-                enddate = startdate.AddDays(7);
+               
 
-                DataSet ds = obj.GetActiveUsersAdmin(startdate, enddate.AddDays(7), ViewState["Location"].ToString().Trim());
+                DataSet ds = obj.GetActiveUsersAdmin(startdate, enddate, ViewState["Location"].ToString().Trim());
 
                 for (int j = 0; j < 4; j++)
                 {
 
-                    DataSet dsResult = obj.GetWeeklyReportAdmin(startdate, enddate, ViewState["Location"].ToString().Trim());
+                    DataSet dsResult = obj.GetWeeklyReportAdmin(startdate, startdate.AddDays(6), ViewState["Location"].ToString().Trim());
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
                         dtAttandence.Columns.Add("Week" + (j + 1), typeof(string));
+                        dtAttandence.Columns.Add("Days" + (j + 1), typeof(string));
 
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
@@ -2691,8 +2689,8 @@ namespace Attendance
                             }
                             dtAttandence.Rows[i]["empid"] = ds.Tables[0].Rows[i]["empid"].ToString();
                             dtAttandence.Rows[i]["empname"] = ds.Tables[0].Rows[i]["firstName"].ToString() + " " + ds.Tables[0].Rows[i]["lastname"].ToString();
-                            dtAttandence.Rows[i]["StatingDate"] = ds.Tables[0].Rows[i]["Startdate"].ToString();
-                            dtAttandence.Rows[i]["TermDate"] = ds.Tables[0].Rows[i]["Termdate"].ToString();
+                            dtAttandence.Rows[i]["StatingDate"] = ds.Tables[0].Rows[i]["Startdate"].ToString() == "NULL" ? "" : ds.Tables[0].Rows[i]["Startdate"].ToString();
+                            dtAttandence.Rows[i]["TermDate"] = ds.Tables[0].Rows[i]["Termdate"].ToString() == "NULL" ? "" : ds.Tables[0].Rows[i]["Termdate"].ToString();
                             if (dsResult.Tables.Count > 0)
                             {
                                 if (dsResult.Tables[0].Rows.Count > 1)
@@ -2706,15 +2704,13 @@ namespace Attendance
                                     {
                                         // dtAttandence.Rows[i]["Week" + (j + 1)] = dtname.Rows[0]["weeklyhrs"].ToString();
                                         dtAttandence.Rows[i]["Week" + (j + 1)] = dtname.Rows[0]["weeklyhrs"].ToString() == "NULL" ? "" : dtname.Rows[0]["weeklyhrs"].ToString() == "" ? "" : GeneralFunction.CalNumericToint(Convert.ToDouble(dtname.Rows[0]["weeklyhrs"].ToString())).ToString();
-                                        dtAttandence.Rows[i]["Days"] = (dtAttandence.Rows[i]["Days"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days"].ToString())) + (dtname.Rows[0]["days"].ToString() == "NULL" ? 0 : Convert.ToInt32(dtname.Rows[0]["days"].ToString()));
+                                        dtAttandence.Rows[i]["Days" + (j + 1)] = dtname.Rows[0]["days"].ToString() == "NULL" ? 0 : dtname.Rows[0]["days"].ToString() == "" ? 0 : Convert.ToInt32(dtname.Rows[0]["days"].ToString());
                                     }
                                 }
                             }
-
-
                         }
-                        startdate = enddate.AddDays(1);
-                        enddate = startdate.AddDays(7);
+                        startdate = startdate.AddDays(7);
+                        enddate = startdate.AddDays(6);
                     }
 
                 }
@@ -2724,7 +2720,13 @@ namespace Attendance
                 int TotalHrs3 = 0;
                 int TotalHrs4 = 0;
                 int TotalDays = 0;
+                int Days1 = 0;
+                int Days2 = 0;
+                int Days3 = 0;
+                int Days4 = 0;
+
                 dtAttandence.Columns.Add("Totalhrs");
+                dtAttandence.Columns.Add("Days");
                 for (int i = 0; i < dtAttandence.Rows.Count - 1; i++)
                 {
                     TotalHrs1 = TotalHrs1 + ((dtAttandence.Rows[i]["Week1"].ToString() == "Null") ? 0 : (dtAttandence.Rows[i]["Week1"].ToString() == "") ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Week1"]));
@@ -2737,7 +2739,18 @@ namespace Attendance
                                                      (dtAttandence.Rows[i]["Week3"].ToString() == "Null" ? 0 : dtAttandence.Rows[i]["Week3"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Week3"])) +
                                                      (dtAttandence.Rows[i]["Week4"].ToString() == "Null" ? 0 : dtAttandence.Rows[i]["Week4"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Week4"])));
                     dtAttandence.Rows[i]["Totalhrs"] = WeekHrs == 0 ? "" : GeneralFunction.ConverttoTime(WeekHrs).ToString();
-                    TotalDays += Convert.ToInt32(dtAttandence.Rows[i]["Days"]);
+                    dtAttandence.Rows[i]["Days"] = (dtAttandence.Rows[i]["Days1"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days1"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days1"]))
+                             + (dtAttandence.Rows[i]["Days2"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days2"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days2"]))
+                             + (dtAttandence.Rows[i]["Days3"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days3"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days3"]))
+                             + (dtAttandence.Rows[i]["Days4"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days4"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days4"]));
+
+                    Days1 += dtAttandence.Rows[i]["Days1"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days1"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days1"]);
+                    Days2 += dtAttandence.Rows[i]["Days2"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days2"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days2"]);
+                    Days3 += dtAttandence.Rows[i]["Days3"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days3"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days3"]);
+                    Days4 += dtAttandence.Rows[i]["Days4"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days4"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days4"]);
+
+                    
+                    TotalDays += dtAttandence.Rows[i]["Days"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days"].ToString());
                 }
 
                 dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Week1"] = TotalHrs1 == 0 ? "" : TotalHrs1.ToString();
@@ -2747,6 +2760,13 @@ namespace Attendance
                 int SUM = TotalHrs1 + TotalHrs2 + TotalHrs3 + TotalHrs4;
                 dtAttandence.Rows[dtAttandence.Rows.Count - 1]["empid"] = "<b>Totals</b>";
                 dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Days"] = TotalDays;
+
+                dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Days1"] = Days1;
+                dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Days2"] = Days2;
+                dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Days3"] = Days3;
+                dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Days4"] = Days4;
+
+
                 dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Totalhrs"] = SUM == 0 ? "" : GeneralFunction.ConverttoTime(SUM).ToString();
             }
             catch (Exception ex)
@@ -2754,8 +2774,6 @@ namespace Attendance
             }
             return dtAttandence;
         }
-
-
         private DataTable GetMonthlyreport(DateTime startdate, DateTime endMonth)
         {
             DataTable dtAttandence = new DataTable();
@@ -2786,7 +2804,7 @@ namespace Attendance
                     if (ds.Tables[0].Rows.Count > 0)
                     {
                         dtAttandence.Columns.Add("Month" + (j + 1), typeof(string));
-
+                        dtAttandence.Columns.Add("Days" + (j + 1), typeof(string));
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
                             if (j == 0)
@@ -2810,7 +2828,7 @@ namespace Attendance
                                     {
                                         // dtAttandence.Rows[i]["Month" + (j + 1)] = dtname.Rows[0]["weeklyhrs"].ToString();
                                         dtAttandence.Rows[i]["Month" + (j + 1)] = dtname.Rows[0]["weeklyhrs"].ToString() == "NULL" ? "" : dtname.Rows[0]["weeklyhrs"].ToString() == "" ? "" : GeneralFunction.CalNumericToint(Convert.ToDouble(dtname.Rows[0]["weeklyhrs"].ToString())).ToString();
-                                        dtAttandence.Rows[i]["Days"] = (dtAttandence.Rows[i]["Days"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days"].ToString())) + (dtname.Rows[0]["days"].ToString() == "NULL" ? 0 : Convert.ToInt32(dtname.Rows[0]["days"].ToString()));
+                                        dtAttandence.Rows[i]["Days" + (j + 1)] = dtname.Rows[0]["days"].ToString() == "NULL" ? 0 : dtname.Rows[0]["days"].ToString() == "" ? 0 : Convert.ToInt32(dtname.Rows[0]["days"].ToString());
                                     }
                                 }
                             }
@@ -2830,7 +2848,16 @@ namespace Attendance
                 int TotalHrs5 = 0;
                 int TotalHrs6 = 0;
                 int TotalDays = 0;
+                int Days1 = 0;
+                int Days2 = 0;
+                int Days3 = 0;
+                int Days4 = 0;
+                int Days5 = 0;
+                int Days6 = 0;
+
                 dtAttandence.Columns.Add("Totalhrs");
+             
+
                 for (int i = 0; i < dtAttandence.Rows.Count - 1; i++)
                 {
                     TotalHrs1 = TotalHrs1 + ((dtAttandence.Rows[i]["Month1"].ToString() == "Null") ? 0 : (dtAttandence.Rows[i]["Month1"].ToString() == "") ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Month1"]));
@@ -2849,7 +2876,21 @@ namespace Attendance
 
 
                     dtAttandence.Rows[i]["Totalhrs"] = WeekHrs == 0 ? "" : GeneralFunction.ConverttoTime(WeekHrs);
-                    TotalDays += Convert.ToInt32(dtAttandence.Rows[i]["Days"]);
+                    dtAttandence.Rows[i]["Days"] = (dtAttandence.Rows[i]["Days1"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days1"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days1"]))
+                              + (dtAttandence.Rows[i]["Days2"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days2"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days2"]))
+                              + (dtAttandence.Rows[i]["Days3"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days3"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days3"]))
+                              + (dtAttandence.Rows[i]["Days4"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days4"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days4"]))
+                              + (dtAttandence.Rows[i]["Days5"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days5"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days5"]))
+                              + (dtAttandence.Rows[i]["Days6"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days6"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days6"]));
+
+                    Days1 += dtAttandence.Rows[i]["Days1"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days1"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days1"]);
+                    Days2 += dtAttandence.Rows[i]["Days2"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days2"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days2"]);
+                    Days3 += dtAttandence.Rows[i]["Days3"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days3"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days3"]);
+                    Days4 += dtAttandence.Rows[i]["Days4"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days4"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days4"]);
+                    Days5 += dtAttandence.Rows[i]["Days5"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days5"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days5"]);
+                    Days6 += dtAttandence.Rows[i]["Days6"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days6"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days6"]);
+
+                    TotalDays += dtAttandence.Rows[i]["Days"].ToString() == "NULL" ? 0 : dtAttandence.Rows[i]["Days"].ToString() == "" ? 0 : Convert.ToInt32(dtAttandence.Rows[i]["Days"].ToString());
                 }
 
                 dtAttandence.Rows[dtAttandence.Rows.Count - 1]["Month1"] = TotalHrs1 == 0 ? "" : TotalHrs1.ToString();
@@ -2868,7 +2909,6 @@ namespace Attendance
             }
             return dtAttandence;
         }
-
         protected void ddlReportType_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -2911,16 +2951,16 @@ namespace Attendance
 
                     // DateTime startOfMonth = new DateTime(todayDate.Year, todayDate.Month, 1);
                     DateTime startDate = GeneralFunction.GetFirstDayOfWeekDate(todayDate);
-                    DateTime StartDate = startDate.AddDays(-28);
+                    DateTime StartDate = startDate.AddDays(-21);
                     ViewState["TodayDate1"] = StartDate;
                     ViewState["CurrentWeek"] = StartDate;
                     hdnWeeklyStartDt.Value = StartDate.ToString();
-                    DateTime endDate = startDate.AddDays(-1);
+                    DateTime endDate = startDate.AddDays(6);
                     ViewState["CrntWkEnd"] = endDate;
                     DataTable dt = GetWeeklyReport(StartDate, endDate);
                     btnFreeze.Visible = false;
                     lblFreeze.Visible = false;
-                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now.AddDays(-7)).ToString("MM/dd/yyyy"))
+                    if (GeneralFunction.GetFirstDayOfWeekDate(endDate).ToString("MM/dd/yyyy") == GeneralFunction.GetFirstDayOfWeekDate(DateTime.Now).ToString("MM/dd/yyyy"))
                     {
                         btnNext.CssClass = "btn btn-danger btn-small disabled";
                         btnNext.Enabled = false;
@@ -3002,23 +3042,22 @@ namespace Attendance
             {
             }
         }
-
         protected void grdWeeklyAttendance_RowDataBound1(object sender, GridViewRowEventArgs e)
         {
             try
             {
-                if (e.Row.RowType == DataControlRowType.Header)
-                {
+                //if (e.Row.RowType == DataControlRowType.Header)
+                //{
 
-                    Label lblWeek1Head = (Label)e.Row.FindControl("lblWeek1Head");
-                    lblWeek1Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).ToString("MM/dd/yyyy");
-                    Label lblWeek2Head = (Label)e.Row.FindControl("lblWeek2Head");
-                    lblWeek2Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(7).ToString("MM/dd/yyyy");
-                    Label lblWeek3Head = (Label)e.Row.FindControl("lblWeek3Head");
-                    lblWeek3Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(14).ToString("MM/dd/yyyy");
-                    Label lblWeek4Head = (Label)e.Row.FindControl("lblWeek4Head");
-                    lblWeek4Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(21).ToString("MM/dd/yyyy");
-                }
+                //    Label lblWeek1Head = (Label)e.Row.FindControl("lblWeek1Head");
+                //    lblWeek1Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).ToString("MM/dd/yyyy");
+                //    Label lblWeek2Head = (Label)e.Row.FindControl("lblWeek2Head");
+                //    lblWeek2Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(7).ToString("MM/dd/yyyy");
+                //    Label lblWeek3Head = (Label)e.Row.FindControl("lblWeek3Head");
+                //    lblWeek3Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(14).ToString("MM/dd/yyyy");
+                //    Label lblWeek4Head = (Label)e.Row.FindControl("lblWeek4Head");
+                //    lblWeek4Head.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(21).ToString("MM/dd/yyyy");
+                //}
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
 
@@ -3041,6 +3080,20 @@ namespace Attendance
                     Label lblWeek4 = (Label)e.Row.FindControl("lblWeek4");
                     lblWeek4.Text = lblWeek4.Text == "" ? "" : GeneralFunction.ConverttoTime(Convert.ToInt32(lblWeek4.Text));
 
+                    Label lblDays = (Label)e.Row.FindControl("lblDays");
+                    lblDays.Text = lblDays.Text == "0" ? "" : lblDays.Text;
+
+                    Label lblDay11 = (Label)e.Row.FindControl("lblDay11");
+                    lblDay11.Text = lblDay11.Text == "0" ? "" : lblDay11.Text;
+
+                    Label lblDay2 = (Label)e.Row.FindControl("lblDay2");
+                    lblDay2.Text = lblDay2.Text == "0" ? "" : lblDay2.Text;
+
+                    Label lblDay3 = (Label)e.Row.FindControl("lblDay3");
+                    lblDay3.Text = lblDay3.Text == "0" ? "" : lblDay3.Text;
+
+                    Label lblDay4 = (Label)e.Row.FindControl("lblDay4");
+                    lblDay4.Text = lblDay4.Text == "0" ? "" : lblDay4.Text;
                 }
             }
             catch (Exception ex)
@@ -3072,7 +3125,6 @@ namespace Attendance
 
             }
         }
-
         protected void btnFreezeCancle_Click(object sender, EventArgs e)
         {
             try
@@ -3083,35 +3135,32 @@ namespace Attendance
             {
             }
         }
-
         protected void btnFreezeOk_Click(object sender, EventArgs e)
         {
 
 
         }
-
-
         protected void grdMonthlyAttendance_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
+            //if (e.Row.RowType == DataControlRowType.Header)
+            //{
 
-                Label lblMonth1Head = (Label)e.Row.FindControl("lblMonth1Head");
-                lblMonth1Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("yyyy");
-                Label lblMonth2Head = (Label)e.Row.FindControl("lblMonth2Head");
-                lblMonth2Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("yyyy");
-                Label lblMonth3Head = (Label)e.Row.FindControl("lblMonth3Head");
-                lblMonth3Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("yyyy");
-                Label lblMonth4Head = (Label)e.Row.FindControl("lblMonth4Head");
-                lblMonth4Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("yyyy");
-                Label lblMonth5Head = (Label)e.Row.FindControl("lblMonth5Head");
-                lblMonth5Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("yyyy");
-                Label lblMonth6Head = (Label)e.Row.FindControl("lblMonth6Head");
-                lblMonth6Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("yyyy");
+            //    Label lblMonth1Head = (Label)e.Row.FindControl("lblMonth1Head");
+            //    lblMonth1Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("yyyy");
+            //    Label lblMonth2Head = (Label)e.Row.FindControl("lblMonth2Head");
+            //    lblMonth2Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("yyyy");
+            //    Label lblMonth3Head = (Label)e.Row.FindControl("lblMonth3Head");
+            //    lblMonth3Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("yyyy");
+            //    Label lblMonth4Head = (Label)e.Row.FindControl("lblMonth4Head");
+            //    lblMonth4Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("yyyy");
+            //    Label lblMonth5Head = (Label)e.Row.FindControl("lblMonth5Head");
+            //    lblMonth5Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("yyyy");
+            //    Label lblMonth6Head = (Label)e.Row.FindControl("lblMonth6Head");
+            //    lblMonth6Head.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("yyyy");
 
 
 
-            }
+            //}
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
@@ -3140,9 +3189,271 @@ namespace Attendance
                 Label lblMonth6 = (Label)e.Row.FindControl("lblMonth6");
                 lblMonth6.Text = lblMonth6.Text == "" ? "" : GeneralFunction.ConverttoTime(Convert.ToInt32(lblMonth6.Text));
 
+                Label lblDays = (Label)e.Row.FindControl("lblDays");
+                lblDays.Text = lblDays.Text == "0" ? "" : lblDays.Text;
+
+                Label lblDays1 = (Label)e.Row.FindControl("lblDays1");
+                lblDays1.Text = lblDays1.Text == "0" ? "" : lblDays1.Text;
+
+                Label lblDays2 = (Label)e.Row.FindControl("lblDays2");
+                lblDays2.Text = lblDays2.Text == "0" ? "" : lblDays2.Text;
+
+                Label lblDays3 = (Label)e.Row.FindControl("lblDays3");
+                lblDays3.Text = lblDays3.Text == "0" ? "" : lblDays3.Text;
+                Label lblDays4 = (Label)e.Row.FindControl("lblDays4");
+                lblDays4.Text = lblDays4.Text == "0" ? "" : lblDays4.Text;
+
+                Label lblDays5 = (Label)e.Row.FindControl("lblDays5");
+                lblDays5.Text = lblDays5.Text == "0" ? "" : lblDays5.Text;
+
+                Label lblDays6 = (Label)e.Row.FindControl("lblDays6");
+                lblDays6.Text = lblDays6.Text == "0" ? "" : lblDays6.Text;
+
 
             }
 
+        }
+        private string CreateNameTable(string Employeename, string StartDate, string TermDate)
+        {
+            string strTransaction = string.Empty;
+            strTransaction = "<table class=\"noPading\"  id=\"SalesStatus\" style=\"display: table; border-collapse:collapse;  width:100%px; background-color:#FFFFFF;border:2px;border-color:Black; \">";
+            strTransaction += "<tr>";
+            strTransaction += "<td style=\"width:50%;\">";
+            strTransaction += "Personal name:";
+            strTransaction += "</td>";
+            strTransaction += "<td>";
+            strTransaction += Employeename;
+            strTransaction += "</td>";
+            strTransaction += "</tr>";
+
+
+            if (StartDate != "01/01/1900" && StartDate != "")
+            {
+                strTransaction += "<tr>";
+                strTransaction += "<td style=\"width:50%;\">";
+                strTransaction += "Start date:";
+                strTransaction += "</td>";
+                strTransaction += "<td>";
+                strTransaction += StartDate;
+                strTransaction += "</td>";
+                strTransaction += "</tr>";
+            }
+
+            if (TermDate != "01/01/1900" && TermDate != "")
+            {
+                strTransaction += "<tr>";
+                strTransaction += "<td style=\"width:50%;\">";
+                strTransaction += "Term date:";
+                strTransaction += "</td>";
+                strTransaction += "<td>";
+                strTransaction += TermDate;
+                strTransaction += "</td>";
+                strTransaction += "</tr>";
+            }
+            strTransaction += "</table>";
+
+            return strTransaction;
+
+        }
+        protected void grdWeeklyAttendance_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.Header)
+                {
+                    GridView HeaderGrid = (GridView)sender;
+
+                    GridViewRow HeaderGridRow = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
+                    TableCell HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).ToString("MM/dd/yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(7).ToString("MM/dd/yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(14).ToString("MM/dd/yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Wk of " + Convert.ToDateTime(hdnWeeklyStartDt.Value).AddDays(21).ToString("MM/dd/yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Totals";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    grdWeeklyAttendance.Controls[0].Controls.AddAt(0, HeaderGridRow);
+
+
+
+
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        protected void grdMonthlyAttendance_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.Header)
+                {
+                    GridView HeaderGrid = (GridView)sender;
+
+                    GridViewRow HeaderGridRow = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
+                    TableCell HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 1;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(1).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(2).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(3).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(4).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("MMM") + "-" + Convert.ToDateTime(hdnMonthlyStartDt.Value).AddMonths(5).ToString("yyyy");
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+
+                    HeaderCell = new TableCell();
+                    HeaderCell.Text = "Totals";
+                    HeaderCell.Style["text-align"] = "center";
+                    HeaderCell.ColumnSpan = 2;
+                    HeaderCell.CssClass = "bL bR";
+                    HeaderGridRow.Cells.Add(HeaderCell);
+
+
+                    grdMonthlyAttendance.Controls[0].Controls.AddAt(0, HeaderGridRow);
+
+
+
+
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

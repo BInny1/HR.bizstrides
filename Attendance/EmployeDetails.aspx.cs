@@ -244,11 +244,7 @@ namespace Attendance
             try
             {
 
-                txtOldpwd.Text = "";
-                txtNewPwd.Text = "";
-                lblPwdName.Text = Session["EmpName"].ToString().Trim();
-                txtConfirmPwd.Text = "";
-                mdlChangePwd.Show();
+              
             }
             catch (Exception ex)
             {
@@ -416,8 +412,8 @@ namespace Attendance
                 ddlSchedule.DataSource = dt;
                 ddlSchedule.DataTextField = "ScheduleType";
                 ddlSchedule.DataValueField = "ScheduleID";
-
                 ddlSchedule.DataBind();
+                ddlSchedule.Items.Insert(0, new ListItem("Select", "0"));
 
             }
             catch (Exception ex)
@@ -471,8 +467,25 @@ namespace Attendance
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             Attendance.Entities.UserInfo objInfo = new UserInfo();
+            string timezone = "";
+
             try
             {
+                if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                {
+                    timezone = "Eastern Standard Time";
+                }
+                else
+                {
+                    timezone = "India Standard Time";
+
+                }
+                DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                var CurentDatetime = ISTTime;
+                hdnToday.Value = ISTTime.ToString("MM/dd/yyyy");
+
+
                 btnUpdate.Attributes.Add("Enabled", "False");
 
                 int UserID = Convert.ToInt32(Session["UserID"]);
@@ -480,7 +493,6 @@ namespace Attendance
 
                 objInfo.Firstname = txtEditFirstname.Text == "" ? "" : GeneralFunction.ToProper(txtEditFirstname.Text.Trim());
                 objInfo.Lastname = txtEditLastname.Text == "" ? "" : GeneralFunction.ToProper(txtEditLastname.Text.Trim());
-
 
                 objInfo.BLastname = txtEditBLname.Text == "" ? txtEditFirstname.Text.Trim() : GeneralFunction.ToProper(txtEditBLname.Text.Trim());
                 objInfo.BFirstname = txtEditBFname.Text == "" ? txtEditLastname.Text.Trim() : GeneralFunction.ToProper(txtEditBFname.Text.Trim());
@@ -971,8 +983,6 @@ namespace Attendance
             }
         }
 
-
-
         protected void lnkUserMangement_Click(object sender, EventArgs e)
         {
             if (Session["IsAdmin"].ToString() == "True")
@@ -984,5 +994,195 @@ namespace Attendance
                 Response.Redirect("UserManagement.aspx");
             }
         }
+
+
+        protected void lnkScheduleAdd_Click(object sender, EventArgs e)
+        {
+            mdlEditPopup.Show();
+
+            txtScheduleEnd.Text = "";
+            txtSheduleStart.Text = "";
+            txtLunchEnd.Text = "";
+            txtLunchStart.Text = "";
+            rdFive.Checked = false;
+            rdSix.Checked = false;
+            rdSeven.Checked = false;
+            mdlSchedulepopup.Show();
+
+
+        }
+
+        protected void btnSchUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string SchStartTime = txtSheduleStart.Text.ToString().Trim();
+                string SchEndTime = txtScheduleEnd.Text.ToString().Trim();
+                string LunchStartime = txtLunchStart.Text.ToString().Trim();
+                string LunchEndtime = txtLunchEnd.Text.ToString().Trim();
+                bool Fivedays = false;
+                bool Sixdays = false;
+                bool Sevendays = false;
+                if (rdFive.Checked)
+                {
+                    Fivedays = true;
+                }
+                else if (rdSix.Checked)
+                {
+                    Sixdays = true;
+                }
+                else if (rdSeven.Checked)
+                {
+                    Sevendays = true;
+                }
+
+                int UserID = Convert.ToInt32(Session["UserID"]);
+
+                string timezone = "";
+                if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                {
+                    timezone = "Eastern Standard Time";
+                }
+                else
+                {
+                    timezone = "India Standard Time";
+
+                }
+                DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                String strHostName = Request.UserHostAddress.ToString();
+                string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
+
+                EmployeeBL obj = new EmployeeBL();
+                string ID = obj.AddNewSchedule(SchStartTime, SchEndTime, LunchStartime, LunchEndtime, Fivedays, Sixdays, Sevendays, strIp, ISTTime, UserID);
+                mdlSchedulepopup.Hide();
+                GetSchedules();
+                ddlSchedule.SelectedIndex = ddlSchedule.Items.IndexOf(ddlSchedule.Items.FindByValue(ID == "" ? "0" : ID));
+                mdlEditPopup.Show();
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        protected void btnCancelSch_Click(object sender, EventArgs e)
+        {
+
+            mdlSchedulepopup.Hide();
+
+        }
+
+        protected void lnkResetPasscode_Click(object sender, EventArgs e)
+        {
+            txtResetNewPasscode.Text = "";
+            txtResetConfirmPasscode.Text = "";
+            lblResetPasscodeName.Text = lblFirstname.Text.Trim();
+            mdlResetPasscode.Show();
+        }
+
+        protected void btnResetCancelPasscode_Click(object sender, EventArgs e)
+        {
+            txtResetNewPasscode.Text = "";
+            txtResetConfirmPasscode.Text = "";
+            mdlResetPasscode.Hide();
+        }
+
+        protected void btnResetPassCode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string passcode = txtResetNewPasscode.Text.Trim();
+                string EmpID = lblEmpID.Text.Trim();
+                String strHostName = Request.UserHostAddress.ToString();
+                int userid = Convert.ToInt32(Session["UserID"]);
+                string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
+                string timezone = "";
+
+
+                if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                {
+                    timezone = "Eastern Standard Time";
+                }
+                else
+                {
+                    timezone = "India Standard Time";
+
+                }
+                DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                var CurentDatetime = ISTTime;
+
+
+                EmployeeBL obj = new EmployeeBL();
+                bool bnew=obj.ResetPasscodeByAdmin(userid,strIp,passcode,CurentDatetime,EmpID);
+                mdlResetPasscode.Hide();
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+
+        protected void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string password = txtResetNewPassword.Text.Trim();
+                string EmpID = lblEmpID.Text.Trim();
+                String strHostName = Request.UserHostAddress.ToString();
+                int userid = Convert.ToInt32(Session["UserID"]);
+                string strIp = System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
+                string timezone = "";
+
+
+                if (Convert.ToInt32(Session["TimeZoneID"]) == 2)
+                {
+                    timezone = "Eastern Standard Time";
+                }
+                else
+                {
+                    timezone = "India Standard Time";
+
+                }
+                DateTime ISTTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
+
+                var CurentDatetime = ISTTime;
+
+
+                EmployeeBL obj = new EmployeeBL();
+                bool bnew = obj.ResetPassWordByAdmin(userid, strIp, password, CurentDatetime, EmpID);
+                mdlResetPassword.Hide();
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+
+        protected void lnkResetPassword_Click(object sender, EventArgs e)
+        {
+            txtResetNewPassword.Text = "";
+            txtResetConfirmPassword.Text = "";
+            lblResetPasswordName.Text = lblFirstname.Text.Trim();
+            mdlResetPassword.Show();
+        }
+
+        protected void btnResetCancelPassword_Click(object sender, EventArgs e)
+        {
+            txtResetNewPassword.Text = "";
+            txtResetConfirmPassword.Text = "";
+            mdlResetPassword.Hide();
+        }
+
     }
 }
