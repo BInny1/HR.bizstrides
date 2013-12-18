@@ -1124,6 +1124,56 @@
                             <td>
                                 <table>
                                     <tr>
+                                        <td>
+                                            Street
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="25"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            City
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            State
+                                        </td>
+                                        <td>
+                                            <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
+                                                TabIndex="25">
+                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Zip
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
+                                                TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            County
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 30px">
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
                                         <td style="width: 100px">
                                             Filling status
                                         </td>
@@ -1181,58 +1231,14 @@
                                             &nbsp;
                                         </td>
                                     </tr>
-                                </table>
-                            </td>
-                            <td style="width: 30px">
-                            </td>
-                            <td>
-                                <table>
                                     <tr>
-                                        <td>
-                                            Street
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="25"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            City
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="26"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            State
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
-                                                TabIndex="25">
-                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Zip
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
-                                                TabIndex="26"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            County
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
+                                        <td colspan="2">
+                                            &nbsp;
                                         </td>
                                     </tr>
                                 </table>
                             </td>
+                        </tr>
                     </table>
                 </div>
                 <h4 class="ppHed acc">
