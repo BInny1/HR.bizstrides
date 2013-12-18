@@ -928,9 +928,8 @@ namespace Attendance
                     Label lblName = (Label)e.Row.FindControl("lblName");
 
                     string tip = CreateNameTable(lblPName.Text.Trim(), Convert.ToDateTime(lblStartDate.Text).ToString("MM/dd/yyyy"), Convert.ToDateTime(lblTermDate.Text).ToString("MM/dd/yyyy"));
-                    lblName.Attributes.Add("rel", "tooltip");
+                    lblName.Attributes.Add("class", "tooltip2");
                     lblName.Attributes.Add("title", tip);
-
 
                     /*
                      
@@ -2597,9 +2596,9 @@ namespace Attendance
         private string CreateNameTable(string Employeename, string StartDate, string TermDate)
         {
             string strTransaction = string.Empty;
-            strTransaction = "<table class=\"noPading\"  id=\"SalesStatus\" style=\"display: table; border-collapse:collapse;  width:100%; margin:0 auto; background-color:#FFFFFF;border:2px;border-color:Black; \">";
+            strTransaction = "<table class=\"noPading\"  id=\"SalesStatus\" style=\"display: table; border-collapse:collapse;  width:100%; min-width:200px; text-align:left;   \">";
             strTransaction += "<tr>";
-            strTransaction += "<td style=\"width:33%;\">";
+            strTransaction += "<td style=\"width:45%;\">";
             strTransaction += "Personal name:";
             strTransaction += "</td>";
             strTransaction += "<td>";
@@ -2611,7 +2610,7 @@ namespace Attendance
             if (StartDate != "01/01/1900" && StartDate != "")
             {
                 strTransaction += "<tr>";
-                strTransaction += "<td style=\"width:33%;\">";
+                strTransaction += "<td style=\"width:45%;\">";
                 strTransaction += "Start date:";
                 strTransaction += "</td>";
                 strTransaction += "<td>";
@@ -2623,7 +2622,7 @@ namespace Attendance
             if (TermDate != "01/01/1900" && TermDate != "")
             {
                 strTransaction += "<tr>";
-                strTransaction += "<td style=\"width:33%;\">";
+                strTransaction += "<td style=\"width:45%;\">";
                 strTransaction += "Term date:";
                 strTransaction += "</td>";
                 strTransaction += "<td>";

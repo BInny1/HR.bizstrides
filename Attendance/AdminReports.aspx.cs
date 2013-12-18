@@ -3216,9 +3216,9 @@ namespace Attendance
         private string CreateNameTable(string Employeename, string StartDate, string TermDate)
         {
             string strTransaction = string.Empty;
-            strTransaction = "<table class=\"noPading\"  id=\"SalesStatus\" style=\"display: table; border-collapse:collapse;  width:100%px; background-color:#FFFFFF;border:2px;border-color:Black; \">";
+            strTransaction = "<table class=\"noPading\"  id=\"SalesStatus\" style=\"display: table; border-collapse:collapse;  width:100%; min-width:200px; text-align:left;   \">";
             strTransaction += "<tr>";
-            strTransaction += "<td style=\"width:50%;\">";
+            strTransaction += "<td style=\"width:45%;\">";
             strTransaction += "Personal name:";
             strTransaction += "</td>";
             strTransaction += "<td>";
@@ -3230,7 +3230,7 @@ namespace Attendance
             if (StartDate != "01/01/1900" && StartDate != "")
             {
                 strTransaction += "<tr>";
-                strTransaction += "<td style=\"width:50%;\">";
+                strTransaction += "<td style=\"width:45%;\">";
                 strTransaction += "Start date:";
                 strTransaction += "</td>";
                 strTransaction += "<td>";
@@ -3242,7 +3242,7 @@ namespace Attendance
             if (TermDate != "01/01/1900" && TermDate != "")
             {
                 strTransaction += "<tr>";
-                strTransaction += "<td style=\"width:50%;\">";
+                strTransaction += "<td style=\"width:45%;\">";
                 strTransaction += "Term date:";
                 strTransaction += "</td>";
                 strTransaction += "<td>";

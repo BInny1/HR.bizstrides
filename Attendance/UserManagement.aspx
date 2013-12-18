@@ -854,9 +854,7 @@
                                 <asp:Label ID="lblEmpLastname" runat="server" Text='<%#Eval("lastname")%>' Visible="false"></asp:Label>
                                 <asp:HiddenField ID="hdnPhoto" runat="server" Value='<%#Eval("photolink")%>' />
                             </ItemTemplate>
-                            
                             <ItemStyle Width="150" />
-                            
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="JoiningDate" HeaderText="StartDt">
                             <%--<HeaderTemplate>
@@ -883,7 +881,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblTermReason" runat="server" Text='<%#Eval("TermReason")%>'></asp:Label>
                             </ItemTemplate>
-                             <ItemStyle Width="130" />
+                            <ItemStyle Width="130" />
                         </asp:TemplateField>
                         <asp:TemplateField SortExpression="DeptName" HeaderText="Department">
                             <%--  <HeaderTemplate>
@@ -1028,16 +1026,12 @@
                                 Schedule<span class="must">*</span>
                             </td>
                             <td>
-                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
-                                <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true" 
-                                    TabIndex="6">
-                                   
-                                </asp:DropDownList>
-                               
-                                &nbsp;&nbsp;
-                             
-                                        <asp:LinkButton ID="lnkScheduleAdd" runat="server" Text="Add new" OnClick="lnkScheduleAdd_Click" ></asp:LinkButton>
+                                        <asp:DropDownList ID="ddlSchedule" runat="server" AutoPostBack="true" TabIndex="6">
+                                        </asp:DropDownList>
+                                        &nbsp;&nbsp;
+                                        <asp:LinkButton ID="lnkScheduleAdd" runat="server" Text="Add new" OnClick="lnkScheduleAdd_Click"></asp:LinkButton>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </td>
@@ -1126,127 +1120,119 @@
                     US employee/contractor tax details <span class="pls">+</span></h4>
                 <div class="ppHedContent">
                     <table style="width: 90%; border-collapse: collapse; margin-left: 10px;">
-                  
                         <tr>
-                        <td>
-                          <table>
-                            <tr>
-                            <td style="width: 100px">
-                                Filling status
-                            </td>
-                            <td style="width: 280px">
-                                <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" Checked="true"
-                                    TabIndex="15" />Single &nbsp;&nbsp;
-                                <asp:RadioButton ID="rdMarried" runat="server" GroupName="MaritalStatus" TabIndex="16" />Married
-                            </td>
-                            </tr>
-                            <tr>
-                           
-                            <td style="width: 100px">
-                                Dedutions
-                            </td>
                             <td>
-                                <asp:DropDownList ID="ddlDeductions" runat="server" AutoPostBack="true" TabIndex="17">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                    <asp:ListItem Text="1" Value="1"></asp:ListItem>
-                                    <asp:ListItem Text="2" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="3" Value="3"></asp:ListItem>
-                                    <asp:ListItem Text="4" Value="4"></asp:ListItem>
-                                    <asp:ListItem Text="5" Value="5"></asp:ListItem>
-                                    <asp:ListItem Text="6" Value="6"></asp:ListItem>
-                                    <asp:ListItem Text="7" Value="7"></asp:ListItem>
-                                    <asp:ListItem Text="8" Value="8"></asp:ListItem>
-                                    <asp:ListItem Text="9" Value="9"></asp:ListItem>
-                                    <asp:ListItem Text="10" Value="10"></asp:ListItem>
-                                </asp:DropDownList>
-                            </td>
-                        </tr>
-                            <tr>
-                            <td style="width: 100px">
-                                Date of birth
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtDateOfBirth" runat="server" Width="190" TabIndex="20"></asp:TextBox>
-                                <img src="images2/cal.gif" onclick="javascript:NewCssCal('txtDateOfBirth')" style="cursor: pointer" />
-                            </td>
-                            <td>
-                            </td>
-                           
-                        </tr>
-                          <tr runat="server" id="SSN" style="display: none;">
-                            <td style="width: 100px">
-                                SSN
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpSSN" runat="server" MaxLength="9" TabIndex="31"></asp:TextBox>
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px">
+                                            Filling status
+                                        </td>
+                                        <td style="width: 280px">
+                                            <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" Checked="true"
+                                                TabIndex="15" />Single &nbsp;&nbsp;
+                                            <asp:RadioButton ID="rdMarried" runat="server" GroupName="MaritalStatus" TabIndex="16" />Married
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px">
+                                            Dedutions
+                                        </td>
+                                        <td>
+                                            <asp:DropDownList ID="ddlDeductions" runat="server" AutoPostBack="true" TabIndex="17">
+                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                                <asp:ListItem Text="1" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="2" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="3" Value="3"></asp:ListItem>
+                                                <asp:ListItem Text="4" Value="4"></asp:ListItem>
+                                                <asp:ListItem Text="5" Value="5"></asp:ListItem>
+                                                <asp:ListItem Text="6" Value="6"></asp:ListItem>
+                                                <asp:ListItem Text="7" Value="7"></asp:ListItem>
+                                                <asp:ListItem Text="8" Value="8"></asp:ListItem>
+                                                <asp:ListItem Text="9" Value="9"></asp:ListItem>
+                                                <asp:ListItem Text="10" Value="10"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px">
+                                            Date of birth
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtDateOfBirth" runat="server" Width="190" TabIndex="20"></asp:TextBox>
+                                            <img src="images2/cal.gif" onclick="javascript:NewCssCal('txtDateOfBirth')" style="cursor: pointer" />
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server" id="SSN" style="display: none;">
+                                        <td style="width: 100px">
+                                            SSN
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpSSN" runat="server" MaxLength="9" TabIndex="31"></asp:TextBox>
+                                        </td>
+                                        <td style="width: 30px">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 100px">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td style="width: 30px">
-                                &nbsp;
-                            </td>
-                            <td style="width: 100px">
-                                &nbsp;
                             </td>
                             <td>
-                                &nbsp;
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Street
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="25"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            City
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            State
+                                        </td>
+                                        <td>
+                                            <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
+                                                TabIndex="25">
+                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Zip
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
+                                                TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            County
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-                        </tr>
-                        </table>
-                        </td>
-                        <td style="width: 30px">
-                        </td>
-                        
-                        <td>
-                          <table>
-                           <tr>
-                            <td>
-                                Street
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="25"></asp:TextBox>
-                            </td>
-                           </tr>
-                           <tr>
-                            <td>
-                                City
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="26"></asp:TextBox>
-                            </td>
-                           </tr>
-                           <tr>
-                            <td>
-                                State
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
-                                    TabIndex="25">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                </asp:DropDownList>
-                            </td>
-                           </tr>
-                           <tr>
-                            <td>
-                                Zip
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
-                                    TabIndex="26"></asp:TextBox>
-                            </td>
-                           </tr>
-                            <td>
-                                County
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
-                            </td>
-                           <tr>
-                           
-                           </tr>
-                          
-                          </table>
-                        
-                        </td>
-                        
                     </table>
                 </div>
                 <h4 class="ppHed acc">
@@ -1264,9 +1250,13 @@
                             </td>
                             <td style="width: 30px">
                             </td>
-                           
+                            <td>
+                                Business email
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtBusinessEmail" runat="server" MaxLength="100" TabIndex="23"></asp:TextBox>
+                            </td>
                         </tr>
-                        
                         <tr>
                             <td>
                                 Phone#
@@ -1277,7 +1267,12 @@
                             </td>
                             <td>
                             </td>
-                           
+                            <td>
+                                Personal email
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtPersonalEmail" runat="server" MaxLength="100" TabIndex="24"></asp:TextBox>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -1289,28 +1284,6 @@
                             </td>
                             <td>
                             </td>
-                           
-                        </tr>
-                        <tr>
-                            <td>
-                                Business email
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtBusinessEmail" runat="server" MaxLength="100" TabIndex="23"></asp:TextBox>
-                            </td>
-                            <td>
-                            </td>
-                           
-                        </tr>
-                        <tr>
-                            <td>
-                                Personal email
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtPersonalEmail" runat="server" MaxLength="100" TabIndex="24"></asp:TextBox>
-                            </td>
-                            <td>
-                            </td>
                             <td>
                                 Driver License#
                             </td>
@@ -1318,7 +1291,6 @@
                                 <asp:TextBox ID="txtEmpDriveLicense" runat="server" MaxLength="30" TabIndex="30"></asp:TextBox>
                             </td>
                         </tr>
-                      
                     </table>
                 </div>
                 <h4 class="ppHed acc">

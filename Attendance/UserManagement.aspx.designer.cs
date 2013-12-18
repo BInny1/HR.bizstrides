@@ -599,24 +599,6 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.RadioButton rdGenderFeMale;
         
         /// <summary>
-        /// txtEmpPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmpPhone;
-        
-        /// <summary>
-        /// txtEmpMobile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmpMobile;
-        
-        /// <summary>
         /// txtBusinessEmail control.
         /// </summary>
         /// <remarks>
@@ -626,6 +608,15 @@ namespace Attendance {
         protected global::System.Web.UI.WebControls.TextBox txtBusinessEmail;
         
         /// <summary>
+        /// txtEmpPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEmpPhone;
+        
+        /// <summary>
         /// txtPersonalEmail control.
         /// </summary>
         /// <remarks>
@@ -633,6 +624,15 @@ namespace Attendance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPersonalEmail;
+        
+        /// <summary>
+        /// txtEmpMobile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEmpMobile;
         
         /// <summary>
         /// txtEmpDriveLicense control.

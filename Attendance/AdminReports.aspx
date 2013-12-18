@@ -11,7 +11,7 @@
     <link href="css/admin.css" rel="stylesheet" type="text/css" />
     <!-- <link rel="stylesheet" href="css/style.css" type="text/css" />  -->
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+    
     
     <style type="text/css">
         body, html
@@ -403,7 +403,7 @@
     </style>
 
     <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="js/jquery.tipsy.js" type="text/javascript"></script>
+    
     
 
     <script type="text/javascript">
@@ -1783,13 +1783,16 @@ function clearDisposableItems( sender , args ) {
     <!--Change password popup End-->
     </form>
 
-    <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+   
 
     <!--  <script src="js/datetimepicker.js" type="text/javascript"></script> 
     <script src="js/overlibmws.js" type="text/javascript"></script>   
     -->
 
     <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+    
+    <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.tipsy.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 
@@ -1918,7 +1921,9 @@ function clearDisposableItems( sender , args ) {
         });
         
         $(function(){
-            $('.tooltip2').tipsy({html: true });
+        
+            $('.tooltip2').tipsy({html: true, gravity:'sw' });
+            
            $.widget("ui.tooltip", $.ui.tooltip, {
                 options: {
                     content: function() {
@@ -2059,7 +2064,7 @@ function clearDisposableItems( sender , args ) {
         
         function pageLoad(){
         
-            
+            $('.tooltip2').tipsy({html: true, gravity:'sw' });
             //console.log('Time')
               $('#spinner').hide();
              $('#txtSignIn').timepicker({                    
