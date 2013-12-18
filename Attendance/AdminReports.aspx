@@ -11,6 +11,8 @@
     <link href="css/admin.css" rel="stylesheet" type="text/css" />
     <!-- <link rel="stylesheet" href="css/style.css" type="text/css" />  -->
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+    
     <style type="text/css">
         body, html
         {
@@ -401,6 +403,8 @@
     </style>
 
     <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="js/jquery.tipsy.js" type="text/javascript"></script>
+    
 
     <script type="text/javascript">
       function validPwd()
@@ -1914,6 +1918,7 @@ function clearDisposableItems( sender , args ) {
         });
         
         $(function(){
+            $('.tooltip2').tipsy({html: true });
            $.widget("ui.tooltip", $.ui.tooltip, {
                 options: {
                     content: function() {

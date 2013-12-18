@@ -40,3 +40,10 @@ D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.BAL\bin\Debug\Att
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.BAL\obj\Debug\ResolveAssemblyReference.cache
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.BAL\obj\Debug\Attendance.BAL.dll
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.BAL\obj\Debug\Attendance.BAL.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\bin\Debug\Attendance.BAL.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\bin\Debug\Attendance.BAL.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\bin\Debug\Attendance.Entities.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\bin\Debug\Attendance.Entities.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\obj\Debug\ResolveAssemblyReference.cache
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\obj\Debug\Attendance.BAL.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.BAL\obj\Debug\Attendance.BAL.pdb

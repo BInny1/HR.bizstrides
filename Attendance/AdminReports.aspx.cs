@@ -702,7 +702,7 @@ namespace Attendance
                     Label lblName = (Label)e.Row.FindControl("lblName");
 
                     string tip = CreateNameTable(lblPName.Text.Trim(), Convert.ToDateTime(lblStartDate.Text).ToString("MM/dd/yyyy"), Convert.ToDateTime(lblTermDate.Text).ToString("MM/dd/yyyy"));
-                    lblName.Attributes.Add("rel", "tooltip");
+                    lblName.Attributes.Add("class", "tooltip2");
                     lblName.Attributes.Add("title", tip);
 
                     if ((Convert.ToDateTime(lblStartDate.Text).ToString("MM/dd/yyyy") != "01/01/1900" && Convert.ToDateTime(ViewState["MonDate"]) < Convert.ToDateTime(lblStartDate.Text)))

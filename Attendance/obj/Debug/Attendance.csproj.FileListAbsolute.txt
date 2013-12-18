@@ -66,3 +66,14 @@ D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance\bin\itextsharp.xm
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance\obj\Debug\ResolveAssemblyReference.cache
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance\obj\Debug\Attendance.dll
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance\obj\Debug\Attendance.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.BAL.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.Entities.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\itextsharp.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.Entities.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\Attendance.BAL.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\bin\itextsharp.xml
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\obj\Debug\ResolveAssemblyReference.cache
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\obj\Debug\Attendance.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance\obj\Debug\Attendance.pdb

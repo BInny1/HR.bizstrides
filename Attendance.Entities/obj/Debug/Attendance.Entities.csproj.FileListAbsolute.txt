@@ -28,3 +28,8 @@ D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.Entities\bin\Debu
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.Entities\obj\Debug\ResolveAssemblyReference.cache
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.Entities\obj\Debug\Attendance.Entities.dll
 D:\HrBizstrides\HrBizLiveDec6\Attandence\Attendance\Attendance.Entities\obj\Debug\Attendance.Entities.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.Entities\bin\Debug\Attendance.Entities.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.Entities\bin\Debug\Attendance.Entities.pdb
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.Entities\obj\Debug\ResolveAssemblyReference.cache
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.Entities\obj\Debug\Attendance.Entities.dll
+D:\github\HrBizstridesClone\HR.bizstrides\Attendance.Entities\obj\Debug\Attendance.Entities.pdb
