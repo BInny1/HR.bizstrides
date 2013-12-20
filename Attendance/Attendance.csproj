@@ -111,6 +111,7 @@
     <Content Include="images\pic8.jpg" />
     <Content Include="images\pic9.jpg" />
     <Content Include="images\popupBack.png" />
+    <Content Include="images\tipsy.gif" />
     <Content Include="js\clock.js" />
     <Content Include="js\datetimepicker.js" />
     <Content Include="js\datetimepicker_css.js" />

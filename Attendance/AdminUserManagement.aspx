@@ -91,7 +91,7 @@
         }
        
        
-       function validateSubmit() {
+       function validateSubmit(){
         debugger
           var valid=true;
    
@@ -155,7 +155,7 @@
                document.getElementById('txtStartDt').focus();
            }
     
-               else if (document.getElementById('ddlWagetype').value=="0")
+      else if (document.getElementById('ddlWagetype').value=="0")
            {
                alert("Please select wage type.");               
                valid=false;
@@ -174,6 +174,159 @@
            } 
            
            
+            else if (document.getElementById('ddlEmpType').value=="1" && ($('#lblLocation').text()!="INDG"&&$('#lblLocation').text()!="INBH"))
+           {
+                if(document.getElementById('txtEmpAddress1').value.trim().length<1)
+               {
+               alert("Please enter street.");               
+               valid=false;
+                document.getElementById('txtEmpAddress1').value="";
+                  $('#txtEmpAddress1').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpAddress1').focus();
+               }
+               
+               else if(document.getElementById('txtEmpAddress2').value.trim().length<1)
+               {
+               alert("Please enter city.");               
+               valid=false;
+                document.getElementById('txtEmpAddress2').value="";
+                  $('#txtEmpAddress2').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpAddress2').focus();
+               }
+               
+               else if (document.getElementById('ddlEmpState').value=="0")
+              {
+               alert("Please select state.");               
+               valid=false;
+                //document.getElementById("ddlDeptment").focus="";
+                  $('#ddlEmpState').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById("ddlEmpState").focus();
+               } 
+               
+               
+                else if(document.getElementById('txtEmpZip').value.trim().length<1)
+               {
+               alert("Please enter zip.");               
+               valid=false;
+                document.getElementById('txtEmpZip').value="";
+                  $('#txtEmpZip').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpZip').focus();
+               }
+               
+               else if (document.getElementById('ddlDeductions').value=="0")
+              {
+               alert("Please select deductions.");               
+               valid=false;
+                //document.getElementById("ddlDeptment").focus="";
+                  $('#ddlDeductions').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById("ddlDeductions").focus();
+               } 
+               
+                 else if(document.getElementById('txtDateOfBirth').value.trim().length<1)
+               {
+               alert("Please enter date of birth.");               
+               valid=false;
+                document.getElementById('txtDateOfBirth').value="";
+                  $('#txtDateOfBirth').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtDateOfBirth').focus();
+               }
+               
+              else if (document.getElementById('<%= txtEmpSSN.ClientID %>')!=null)
+	         {
+	        
+	          if (document.getElementById('<%= txtEmpSSN.ClientID %>').value!="")
+	         {
+	             if(document.getElementById('txtEmpSSN').value.trim().length<9)
+               {
+               alert("Please enter valid ssn.");               
+               valid=false;
+                document.getElementById('txtEmpSSN').value="";
+                  $('#txtEmpSSN').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpSSN').focus();
+              
+              }
+	        }
+	        else
+	        {
+	           alert("Please enter ssn.");               
+               valid=false;
+                document.getElementById('txtEmpSSN').value="";
+                  $('#txtEmpSSN').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpSSN').focus();
+	        }
+               
+               
+            }
+           }
+           
+           else if (document.getElementById('ddlEmpType').value=="2" && ($('#lblLocation').text()!="INDG"&&$('#lblLocation').text()!="INBH"))
+           {
+           
+                   if(document.getElementById('txtEmpAddress1').value.trim().length<1)
+               {
+               alert("Please enter street.");               
+               valid=false;
+                document.getElementById('txtEmpAddress1').value="";
+                  $('#txtEmpAddress1').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpAddress1').focus();
+               }
+               
+               else if(document.getElementById('txtEmpAddress2').value.trim().length<1)
+               {
+               alert("Please enter city.");               
+               valid=false;
+                document.getElementById('txtEmpAddress2').value="";
+                  $('#txtEmpAddress2').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpAddress2').focus();
+               }
+               
+               else if (document.getElementById('ddlEmpState').value=="0")
+              {
+               alert("Please select state.");               
+               valid=false;
+                //document.getElementById("ddlDeptment").focus="";
+                  $('#ddlEmpState').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById("ddlEmpState").focus();
+               } 
+               
+               
+                else if(document.getElementById('txtEmpZip').value.trim().length<1)
+               {
+               alert("Please enter zip.");               
+               valid=false;
+                document.getElementById('txtEmpZip').value="";
+                  $('#txtEmpZip').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpZip').focus();
+               }
+           
+                 else if (document.getElementById('<%= txtEmpSSN.ClientID %>')!=null)
+	         {
+	        
+	          if (document.getElementById('<%= txtEmpSSN.ClientID %>').value!="")
+	         {
+	             if(document.getElementById('txtEmpSSN').value.trim().length<9)
+               {
+               alert("Please enter valid ssn.");               
+               valid=false;
+                document.getElementById('txtEmpSSN').value="";
+                  $('#txtEmpSSN').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpSSN').focus();
+              
+              }
+	        }
+	        else
+	        {
+	           alert("Please enter ssn.");               
+               valid=false;
+                document.getElementById('txtEmpSSN').value="";
+                  $('#txtEmpSSN').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
+               document.getElementById('txtEmpSSN').focus();
+	        }
+               
+            }
+           
+           
+           }
            
               else if (document.getElementById('rdGenderMale').checked==false && document.getElementById('rdGenderFeMale').checked==false)
            {
@@ -183,6 +336,8 @@
                   $('#rdGenderMale').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
                document.getElementById("rdGenderMale").focus();
            } 
+       
+          
     
           else if(document.getElementById('txtEmpMobile').value!="")
            {
@@ -235,25 +390,8 @@
               }
 	        }   
 	        
-	         else if (document.getElementById('<%= txtEmpSSN.ClientID %>')!=null)
-	         {
 	        
-	          if (document.getElementById('<%= txtEmpSSN.ClientID %>').value!="")
-	        {
-	             if(document.getElementById('txtEmpSSN').value.trim().length<9)
-             {
-               alert("Please enter valid ssn.");               
-               valid=false;
-                document.getElementById('txtEmpSSN').value="";
-                  $('#txtEmpSSN').closest('.ppHedContent').slideDown().prev('h4').children('span').html('-');
-               document.getElementById('txtEmpSSN').focus();
-              
-              }
-	        }
-	        }
-	        
-	        
-	         
+	                
     
       else if(document.getElementById('txtCn1Phone').value!="")
            {
@@ -369,6 +507,7 @@
     
            return valid;
        }
+    
     
     
      function validateEditSubmit() {
@@ -983,7 +1122,7 @@
                 <asp:LinkButton ID="lnkClose" runat="server"></asp:LinkButton></span>
         </h2>
         <div class="inner">
-            <table style="width: 99%;">
+           <table style="width: 99%;">
                 <tr>
                     <td style="width: 712px;">
                         &nbsp;
@@ -1011,13 +1150,18 @@
                             </asp:UpdatePanel>
                         </div>
                         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" />
-                        <br />
-                        <asp:UpdatePanel ID="uppp" runat="server">
+                        
+                    </td>
+                </tr>
+                <tr>
+                <td colspan="3" style="float: right;margin-right: 27px;">
+                     <asp:UpdatePanel ID="uppp" runat="server">
                             <ContentTemplate>
                                 <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                    </td>
+                
+                </td>
                 </tr>
             </table>
             <div class="scrollBlock">
@@ -1186,38 +1330,127 @@
                         </tr>
                     </table>
                 </div>
-                <h4 class="ppHed acc">
+              <h4 class="ppHed acc">
                     US employee/contractor tax details <span class="pls">+</span></h4>
                 <div class="ppHedContent">
                     <table style="width: 90%; border-collapse: collapse; margin-left: 10px;">
                         <tr>
-                            <td style="width: 100px">
-                                Filling status<span class="must">*</span>
+                            <td style="width: 49%;vertical-align:top" >
+                                <table style="width: 99%;vertical-align:top;">
+                                    <tr>
+                                        <td style="width: 100px;vertical-align:top">
+                                            Street
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="25"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            City
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            State
+                                        </td>
+                                        <td>
+                                            <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
+                                                TabIndex="25">
+                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Zip
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
+                                                TabIndex="26"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            County
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-                            <td style="width: 280px">
-                                <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" TabIndex="13" />Single
-                                &nbsp;&nbsp;
-                                <asp:RadioButton ID="rdMarried" runat="server" GroupName="MaritalStatus" TabIndex="14" />Married
+                            <td style="width: 5%">
                             </td>
-                            <td style="width: 30px">
-                            </td>
-                            <td style="width: 100px">
-                                Dedutions
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="ddlDeductions" runat="server" AutoPostBack="true" TabIndex="15">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                    <asp:ListItem Text="1" Value="1"></asp:ListItem>
-                                    <asp:ListItem Text="2" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="3" Value="3"></asp:ListItem>
-                                    <asp:ListItem Text="4" Value="4"></asp:ListItem>
-                                    <asp:ListItem Text="5" Value="5"></asp:ListItem>
-                                    <asp:ListItem Text="6" Value="6"></asp:ListItem>
-                                    <asp:ListItem Text="7" Value="7"></asp:ListItem>
-                                    <asp:ListItem Text="8" Value="8"></asp:ListItem>
-                                    <asp:ListItem Text="9" Value="9"></asp:ListItem>
-                                    <asp:ListItem Text="10" Value="10"></asp:ListItem>
-                                </asp:DropDownList>
+                            <td style="vertical-align:top">
+                                <table style="width: 99%;vertical-align:top;">
+                                    <tr>
+                                        <td style="width: 150px;vertical-align:top">
+                                            Filling status
+                                        </td>
+                                        <td >
+                                            <asp:RadioButton ID="rdMarriedSingle" runat="server" GroupName="MaritalStatus" Checked="true"
+                                                TabIndex="15" />Single &nbsp;&nbsp;
+                                            <asp:RadioButton ID="rdMarried" runat="server" GroupName="MaritalStatus" TabIndex="16" />Married
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px">
+                                            Deductions
+                                        </td>
+                                        <td>
+                                            <asp:DropDownList ID="ddlDeductions" runat="server" AutoPostBack="true" TabIndex="17">
+                                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                                <asp:ListItem Text="1" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="2" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="3" Value="3"></asp:ListItem>
+                                                <asp:ListItem Text="4" Value="4"></asp:ListItem>
+                                                <asp:ListItem Text="5" Value="5"></asp:ListItem>
+                                                <asp:ListItem Text="6" Value="6"></asp:ListItem>
+                                                <asp:ListItem Text="7" Value="7"></asp:ListItem>
+                                                <asp:ListItem Text="8" Value="8"></asp:ListItem>
+                                                <asp:ListItem Text="9" Value="9"></asp:ListItem>
+                                                <asp:ListItem Text="10" Value="10"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px">
+                                            Date of birth
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtDateOfBirth" runat="server" Width="190" TabIndex="20"></asp:TextBox>
+                                            <img src="images2/cal.gif" onclick="javascript:NewCssCal('txtDateOfBirth')" style="cursor: pointer" />
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server" id="SSN" style="display: none;">
+                                        <td style="width: 100px">
+                                            SSN
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtEmpSSN" runat="server" MaxLength="9" TabIndex="31"></asp:TextBox>
+                                        </td>
+                                        <td style="width: 30px">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width: 100px">
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
@@ -1228,37 +1461,20 @@
                     <table style="width: 90%; border-collapse: collapse; margin-left: 10px;">
                         <tr>
                             <td style="width: 100px">
-                                Gender<span class="must">*</span>
+                                Gender
                             </td>
                             <td style="width: 280px">
-                                <asp:RadioButton ID="rdGenderMale" runat="server" GroupName="Gender" TabIndex="16" />Male
+                                <asp:RadioButton ID="rdGenderMale" runat="server" GroupName="Gender" TabIndex="18" />Male
                                 &nbsp;&nbsp;
-                                <asp:RadioButton ID="rdGenderFeMale" runat="server" GroupName="Gender" TabIndex="17" />Female
+                                <asp:RadioButton ID="rdGenderFeMale" runat="server" GroupName="Gender" TabIndex="19" />Female
                             </td>
                             <td style="width: 30px">
                             </td>
                             <td>
-                                Street
+                                Business email
                             </td>
                             <td>
-                                <asp:TextBox ID="txtEmpAddress1" runat="server" MaxLength="250" TabIndex="23"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 100px">
-                                Date of birth
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtDateOfBirth" runat="server" Width="190" TabIndex="18"></asp:TextBox>
-                                <img src="images2/cal.gif" onclick="javascript:NewCssCal('txtDateOfBirth')" style="cursor: pointer" />
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                City
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpAddress2" runat="server" MaxLength="250" TabIndex="24"></asp:TextBox>
+                                <asp:TextBox ID="txtBusinessEmail" runat="server" MaxLength="100" TabIndex="23"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -1267,18 +1483,15 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEmpPhone" runat="server" MaxLength="15" onkeypress="return isNumberKey(event)"
-                                    TabIndex="19"></asp:TextBox>
+                                    TabIndex="23"></asp:TextBox>
                             </td>
                             <td>
                             </td>
                             <td>
-                                State
+                                Personal email
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlEmpState" runat="server" AutoPostBack="true" AppendDataBoundItems="true"
-                                    TabIndex="25">
-                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-                                </asp:DropDownList>
+                                <asp:TextBox ID="txtPersonalEmail" runat="server" MaxLength="100" TabIndex="24"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -1287,40 +1500,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEmpMobile" runat="server" MaxLength="10" onkeypress="return isNumberKey(event)"
-                                    TabIndex="20"></asp:TextBox>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                Zip
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpZip" runat="server" MaxLength="8" onkeypress="return isNumberKey(event)"
-                                    TabIndex="26"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Business email
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtBusinessEmail" runat="server" MaxLength="100" TabIndex="21"></asp:TextBox>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                County
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtCounty" runat="server" MaxLength="25" TabIndex="27"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Personal email
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtPersonalEmail" runat="server" MaxLength="100" TabIndex="22"></asp:TextBox>
+                                    TabIndex="22"></asp:TextBox>
                             </td>
                             <td>
                             </td>
@@ -1328,24 +1508,7 @@
                                 Driver License#
                             </td>
                             <td>
-                                <asp:TextBox ID="txtEmpDriveLicense" runat="server" MaxLength="30" TabIndex="28"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr runat="server" id="SSN" style="display: none;">
-                            <td style="width: 100px">
-                                SSN
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtEmpSSN" runat="server" MaxLength="9" TabIndex="29"></asp:TextBox>
-                            </td>
-                            <td style="width: 30px">
-                                &nbsp;
-                            </td>
-                            <td style="width: 100px">
-                                &nbsp;
-                            </td>
-                            <td>
-                                &nbsp;
+                                <asp:TextBox ID="txtEmpDriveLicense" runat="server" MaxLength="30" TabIndex="30"></asp:TextBox>
                             </td>
                         </tr>
                     </table>

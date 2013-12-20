@@ -1683,7 +1683,10 @@ function clearDisposableItems( sender , args ) {
             <table style="width: 97%; margin: 20px 5px; border-collapse: collapse;">
                 <tr>
                     <td>
-                        Old password                     <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="20" TextMode="Password"></asp:TextBox>
+                        Old password             
+                    </td>
+                    <td>
+                            <asp:TextBox ID="txtOldpwd" runat="server" MaxLength="20" TextMode="Password"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

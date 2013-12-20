@@ -1068,7 +1068,7 @@
                                                             <td style="width: 10px">
                                                             </td>
                                                             <td style="width: 100px">
-                                                                <b>Dedutions</b>
+                                                                <b>Deductions</b>
                                                             </td>
                                                             <td>
                                                                 <asp:Label ID="lblDeuctions" runat="server"></asp:Label>

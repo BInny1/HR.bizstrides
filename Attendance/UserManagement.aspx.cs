@@ -208,26 +208,6 @@ namespace Attendance
         }
 
 
-        //private void GetLocations()
-        //{
-        //    try
-        //    {
-        //        Attendance.BAL.Report obj = new Report();
-        //        DataTable dt = obj.GetLocations();
-        //        ddllocation.DataSource = dt;
-        //        ddllocation.DataTextField = "LocationName";
-        //        ddllocation.DataValueField = "LocationId";
-        //        ddllocation.DataBind();
-        //         ddlEditLocation.DataSource = dt;
-        //        ddlEditLocation.DataTextField = "LocationName";
-        //        ddlEditLocation.DataValueField = "LocationId";
-        //        ddlEditLocation.DataBind();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
-
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             Attendance.Entities.UserInfo objInfo = new UserInfo();
